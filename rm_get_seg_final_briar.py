@@ -90,7 +90,7 @@ for d in data:
     rel_dir = v_dir.split('/')[3:]
     rel_dir = '/'.join(rel_dir)
     save_dir = root/rel_dir
-    
+    save_dir.mkdir(exist_ok = True, parents = True)
     for f_id in slice:
         img_path = Path(v_dir)/f_id
         im = cv2.imread(str(img_path))
@@ -136,5 +136,8 @@ for d in data:
                         overall_mask+=mask#.astype(np.float)
         overall_mask = (overall_mask > 0)*1
         print("overall mask",overall_mask.shape)
+        save_path = save_dir/f_id
+        cv2.imwrite(str(save_path), overall_mask*255)
+        print("saved")
         
         exit(1)
