@@ -1,33 +1,33 @@
 #the actual code which runs on dennis 
 import os 
 from pathlib import Path 
-# import torch
+import torch
 
-# import detectron2
-# from detectron2.utils.logger import setup_logger
-# setup_logger()
-# setup_logger(name="mask2former")
+import detectron2
+from detectron2.utils.logger import setup_logger
+setup_logger()
+setup_logger(name="mask2former")
 
 
-# # import some common libraries
-# import numpy as np
-# import cv2
-# # import some common detectron2 utilities
-# from detectron2 import model_zoo
-# from detectron2.engine import DefaultPredictor
-# from detectron2.config import get_cfg
-# from detectron2.utils.visualizer import Visualizer, ColorMode
-# from detectron2.data import MetadataCatalog
-# from detectron2.projects.deeplab import add_deeplab_config
-# from pathlib import Path
-# # import Mask2Former project
-# from mask2former import add_maskformer2_config
+# import some common libraries
+import numpy as np
+import cv2
+# import some common detectron2 utilities
+from detectron2 import model_zoo
+from detectron2.engine import DefaultPredictor
+from detectron2.config import get_cfg
+from detectron2.utils.visualizer import Visualizer, ColorMode
+from detectron2.data import MetadataCatalog
+from detectron2.projects.deeplab import add_deeplab_config
+from pathlib import Path
+# import Mask2Former project
+from mask2former import add_maskformer2_config
 
-# import pickle 
-# import random 
-# import pycocotools.mask as mask_util
-# import numpy as np 
-# from einops import rearrange, reduce, repeat
+import pickle 
+import random 
+import pycocotools.mask as mask_util
+import numpy as np 
+from einops import rearrange, reduce, repeat
 
 def read_txt(path):
     with open(path) as f:
@@ -76,5 +76,7 @@ for d in data:
     rel_dir = v_dir.split('/')[3:]
     rel_dir = '/'.join(rel_dir)
     save_dir = root/rel_dir
-    print(save_dir)
-    exit(1)
+    
+    for f_id in slice:
+        img_path = v_dir/f_id
+        im = cv2.imread(str(img_path))
