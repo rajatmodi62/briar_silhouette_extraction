@@ -73,7 +73,7 @@ for d in data:
         print("not found much freames")
         continue
         # exit(1)
-    rel_dir = v_dir.split('/')[2:]
+    rel_dir = v_dir.split('/')[3:]
     rel_dir = '/'.join(rel_dir)
     save_dir = root/rel_dir
     print(save_dir)
