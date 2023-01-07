@@ -80,3 +80,5 @@ for d in data:
     for f_id in slice:
         img_path = Path(v_dir)/f_id
         im = cv2.imread(str(img_path))
+        print("read im", im.shape)
+        exit(1)
