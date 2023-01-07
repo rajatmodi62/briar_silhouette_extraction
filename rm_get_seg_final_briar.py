@@ -63,6 +63,7 @@ for d in data:
         
         slice = filtered_f_ids[n- n_frames//2: n+ n_frames//2] #sample from the middle 
         print("slice is", slice)
+        print(start, end)
         exit(1)
     else:
         print("not found much freames")
