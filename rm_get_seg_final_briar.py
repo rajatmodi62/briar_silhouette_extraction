@@ -52,8 +52,9 @@ for d in data:
     filtered_f_ids = []
     for f_id in f_ids:
         print("f_id", f_id)
-        id = f_id.split('.')[0].split('_')[-2]
+        id = f_id.split('.')[0].split('_')[1]
         id = int(id)
+        print("id", id)
         if start<=id<=end:
             filtered_f_ids.append(f_id)
     filtered_f_ids = sorted(filtered_f_ids)
