@@ -50,6 +50,7 @@ for d in data:
     
     filtered_f_ids = []
     for f_id in f_ids:
+        print("f_id", f_id)
         id = f_id.split('.')[0].split('_')[-1]
         print(id)
         # id = int(id)
