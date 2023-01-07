@@ -52,6 +52,6 @@ for d in data:
     for f_id in f_ids:
         id = f_id.split('.')[0].split('_')[-1]
         print(id)
-        id = int(id)
+        # id = int(id)
         print("id is",id)
         break
