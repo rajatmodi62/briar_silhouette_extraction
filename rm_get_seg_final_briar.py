@@ -54,8 +54,8 @@ for d in data:
         print("f_id", f_id)
         id = f_id.split('.')[0].split('_')[-2]
         id = int(id)
-        if start<=f_id<=end:
-            filtered_f_ids.append(f_id)
+        if start<=id<=end:
+            filtered_f_ids.append(id)
     filtered_f_ids = sorted(filtered_f_ids)
     if len(filtered_f_ids) > n_frames:
         n = len(filtered_f_ids)//2
