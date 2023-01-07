@@ -37,6 +37,7 @@ def read_txt(path):
 
 txt_path = 'trainlist_brs1_atleast_32frames_smooth_strt_end_idx_info_158_pids_no_uav.txt'
 
+n_frames = 60 # to_sample
 lines = read_txt(txt_path)
 
 data = []
@@ -53,5 +54,15 @@ for d in data:
         print("f_id", f_id)
         id = f_id.split('.')[0].split('_')[-2]
         id = int(id)
-        print("id is",id)
-        break
+        if start<=f_id<=end:
+            filtered_f_ids.append(f_id)
+    filtered_f_ids = sorted(filtered_f_ids)
+    if len(filtered_f_ids) > n_frames:
+        n = len(filtered_f_ids)//2
+        
+        slice = filtered_f_ids[n- n_frames//2: n+ n_frames//2] #sample from the middle 
+        print("slice is", slice)
+        exit(1)
+    else:
+        print("not found much freames")
+        exit(1)
