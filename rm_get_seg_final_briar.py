@@ -39,7 +39,7 @@ txt_path = 'trainlist_brs1_atleast_32frames_smooth_strt_end_idx_info_158_pids_no
 
 
 root = Path('/data/project/rm_silhouette')
-n_frames = 200 # to_sample
+n_frames = 100 # to_sample
 score_thresh = 0.5
 alpha = 0.5
 
