@@ -78,5 +78,5 @@ for d in data:
     save_dir = root/rel_dir
     
     for f_id in slice:
-        img_path = v_dir/f_id
+        img_path = Path(v_dir)/f_id
         im = cv2.imread(str(img_path))
