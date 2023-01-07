@@ -37,7 +37,9 @@ def read_txt(path):
 
 txt_path = 'trainlist_brs1_atleast_32frames_smooth_strt_end_idx_info_158_pids_no_uav.txt'
 
-n_frames = 60 # to_sample
+
+root = Path('/data/project/rm_silhouette')
+n_frames = 65 # to_sample
 lines = read_txt(txt_path)
 
 data = []
@@ -65,7 +67,14 @@ for d in data:
         slice = filtered_f_ids[n- (n_frames//2): n+ (n_frames//2)] #sample from the middle 
         print("slice is", slice)
         print(start, end, len(filtered_f_ids),n- (n_frames//2),n+ (n_frames//2 ))
-        exit(1)
+        # exit(1)
     else:
+        
         print("not found much freames")
-        exit(1)
+        continue
+        # exit(1)
+    rel_dir = v_dir.split('/')[2:]
+    rel_dir = '/'.join(rel_dir)
+    save_dir = root/rel_dir
+    print(save_dir)
+    exit(1)
