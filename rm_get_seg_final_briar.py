@@ -61,9 +61,10 @@ for d in data:
     if len(filtered_f_ids) > n_frames:
         n = len(filtered_f_ids)//2
         
-        slice = filtered_f_ids[n- n_frames//2: n+ n_frames//2] #sample from the middle 
+
+        slice = filtered_f_ids[n- (n_frames//2): n+ (n_frames//2)] #sample from the middle 
         print("slice is", slice)
-        print(start, end)
+        print(start, end, len(filtered_f_ids),n- (n_frames//2),n+ (n_frames//2 )
         exit(1)
     else:
         print("not found much freames")
