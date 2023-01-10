@@ -71,6 +71,7 @@ for done, item in enumerate(filtered_f_ids):
     save_path = root/v_folder/f_id
 
     src_path = Path(v_folder)/f_id
+    print("src path", str(src_path))
     im = cv2.imread(str(src_path))
     # print("read im", im.shape)
     outputs = predictor(im)
