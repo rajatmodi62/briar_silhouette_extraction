@@ -46,7 +46,7 @@ for p in os.walk(str(test_dir)):
         if '.jpg' in f_id:
             filtered_f_ids.append([v_folder,f_id])
             # print("true")
-print("len of", filtered_f_ids,v_folder)
+print("len of", len(filtered_f_ids),v_folder)
 exit(1)
 
 n_frames = 100 # to_sample
