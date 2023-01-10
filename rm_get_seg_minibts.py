@@ -77,7 +77,7 @@ for done, item in enumerate(filtered_f_ids):
     print("save v ", save_v_folder)
     (root/v_folder).mkdir(exist_ok= True, parents =True)
     save_path = root/v_folder/f_id
-    exit(1)
+    # exit(1)
     print("src path", str(src_path))
     im = cv2.imread(str(src_path))
     # print("read im", im.shape)
@@ -122,4 +122,4 @@ for done, item in enumerate(filtered_f_ids):
                     overall_mask+=mask#.astype(np.float)
     overall_mask = (overall_mask > 0)*1
     cv2.imwrite(str(save_path), overall_mask*255)
-    exit(1)
+    # exit(1)
