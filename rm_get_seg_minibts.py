@@ -66,6 +66,7 @@ predictor = DefaultPredictor(cfg)
 
 for done, item in enumerate(filtered_f_ids):
     print("done", done, "/", len(filtered_f_ids))
+    print("v_folder", v_folder)
     v_folder, f_id = item
     (root/v_folder).mkdir(exist_ok= True, parents =True)
     save_path = root/v_folder/f_id
