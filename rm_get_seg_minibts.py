@@ -70,7 +70,7 @@ for done, item in enumerate(filtered_f_ids):
     (root/v_folder).mkdir(exist_ok= True, parents =True)
     save_path = root/v_folder/f_id
 
-    src_path = v_folder/f_id
+    src_path = Path(v_folder)/f_id
     im = cv2.imread(str(src_path))
     # print("read im", im.shape)
     outputs = predictor(im)
