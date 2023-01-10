@@ -37,8 +37,8 @@ test_dir = Path('/data/project/brs_bts_version_1/mini_bts1_datasets')
 filtered_f_ids = []
 for p in os.walk(str(test_dir)):
     v_folder = p[0]
-    v_folder = v_folder.split('/')[2:]
-    v_folder = '/'.join(v_folder)
+    # v_folder = v_folder.split('/')[2:]
+    # v_folder = '/'.join(v_folder)
 
     f_ids = p[2]
     
@@ -68,10 +68,13 @@ for done, item in enumerate(filtered_f_ids):
     print("done", done, "/", len(filtered_f_ids))
     print("v_folder", v_folder)
     v_folder, f_id = item
-    (root/v_folder).mkdir(exist_ok= True, parents =True)
-    save_path = root/v_folder/f_id
+    
 
     src_path = Path(v_folder)/f_id
+    
+    (root/v_folder).mkdir(exist_ok= True, parents =True)
+    save_path = root/v_folder/f_id
+    exit(1)
     print("src path", str(src_path))
     im = cv2.imread(str(src_path))
     # print("read im", im.shape)
