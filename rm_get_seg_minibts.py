@@ -37,13 +37,16 @@ test_dir = Path('/data/project/brs_bts_version_1/mini_bts1_datasets')
 filtered_f_ids = []
 for p in os.walk(str(test_dir)):
     v_folder = p[0]
+    v_folder = v_folder.split('/')[2:]
+    v_folder = '/'.join(v_folder)
+
     f_ids = p[2]
     
     for f_id in f_ids:
         if '.jpg' in f_id:
             filtered_f_ids.append([v_folder,f_id])
-            print("true")
-print("len of", filtered_f_ids)
+            # print("true")
+print("len of", filtered_f_ids,v_folder)
 exit(1)
 
 n_frames = 100 # to_sample
