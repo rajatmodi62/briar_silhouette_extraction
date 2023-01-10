@@ -37,6 +37,7 @@ test_dir = Path('/data/project/brs_bts_version_1/mini_bts1_datasets')
 
 for p in os.walk(str(test_dir)):
     print(p)
+    exit(1)
 
 n_frames = 100 # to_sample
 score_thresh = 0.5
