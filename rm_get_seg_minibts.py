@@ -34,10 +34,17 @@ from einops import rearrange, reduce, repeat
 
 root = Path('/data/project/rm_silhouette')
 test_dir = Path('/data/project/brs_bts_version_1/mini_bts1_datasets')
-
+filtered_f_ids = []
 for p in os.walk(str(test_dir)):
-    print(p)
-    exit(1)
+    v_folder = p[0]
+    f_ids = p[2]
+    
+    for f_id in f_ids:
+        if '.jpg' in f_id:
+            filtered_f_ids.append([v_folder,f_id])
+            print("true")
+print("len of", filtered_f_ids)
+exit(1)
 
 n_frames = 100 # to_sample
 score_thresh = 0.5
