@@ -75,8 +75,8 @@ for done, item in enumerate(filtered_f_ids):
     save_v_folder = v_folder.split('/')[3:]
     save_v_folder = '/'.join(save_v_folder)
     print("save v ", save_v_folder)
-    (root/v_folder).mkdir(exist_ok= True, parents =True)
-    save_path = root/v_folder/f_id
+    (root/save_v_folder).mkdir(exist_ok= True, parents =True)
+    save_path = root/save_v_folder/f_id
     # exit(1)
     print("src path", str(src_path))
     im = cv2.imread(str(src_path))
