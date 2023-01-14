@@ -57,7 +57,8 @@ predictor = DefaultPredictor(cfg)
 lines = read_txt(txt_path)
 
 data = []
-for line in lines:
+for done, line in enumerate(lines):
+    print("done", done, "/", len(lines))
     l = line.split(' ')
     data.append([l[0], int(l[1]), int(l[2]), int(l[3])])
 
