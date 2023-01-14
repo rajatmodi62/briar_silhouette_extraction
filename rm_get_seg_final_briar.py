@@ -35,7 +35,7 @@ def read_txt(path):
         lines = [line.strip() for line in lines]
     return lines
 
-txt_path = 'trainlist_brs1_atleast_32frames_smooth_strt_end_idx_info_158_pids_no_uav.txt'
+txt_path = 'trainlist_brs2_atleast_32_frames_smooth_strt_end_idx_info_195_pids_no_uav.txt'
 
 
 root = Path('/data/project/rm_silhouette')
