@@ -58,10 +58,12 @@ lines = read_txt(txt_path)
 
 data = []
 for done, line in enumerate(lines):
-    print("done", done, "/", len(lines))
-    l = line.split(' ')
-    data.append([l[0], int(l[1]), int(l[2]), int(l[3])])
-
+    try:
+        print("done", done, "/", len(lines))
+        l = line.split(' ')
+        data.append([l[0], int(l[1]), int(l[2]), int(l[3])])
+    except:
+        print("some error")
 for done, d in enumerate(data):
     try:
         v_dir, label, start, end = d[0],d[1],d[2],d[3]
