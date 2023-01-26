@@ -80,7 +80,7 @@ data = dirs
 #     except:
 #         print("some error")
 for done, img_path in enumerate(data):
-    try:
+    # try:
             print("done",done, "/", len(data))
             # print("img_path",img_path)
             folder_name = img_path.split('/')[-2]
@@ -146,5 +146,5 @@ for done, img_path in enumerate(data):
                 f.write(str(done))
             f.close()
             # exit(1)
-    except:
-        print("some exception occcured")
+    # except:
+    #     print("some exception occcured")
