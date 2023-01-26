@@ -87,7 +87,8 @@ for done, img_path in enumerate(data):
             img_name = img_path.split('/')[-1]
             # img_path = Path(v_dir)/f_id
             im = cv2.imread(str(img_path))
-            # print("read im", im.shape)
+            print("read im", im.shape)
+            exit(1)
             outputs = predictor(im)
 
             # v = Visualizer(im[:, :, ::-1], coco_metadata, scale=1.2, instance_mode=ColorMode.IMAGE_BW)
