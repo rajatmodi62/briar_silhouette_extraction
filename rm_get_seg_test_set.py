@@ -80,8 +80,9 @@ data = dirs
 #     except:
 #         print("some error")
 for done, img_path in enumerate(data):
-    # try:
-            print("img_path",img_path)
+    try:
+            print("done",done, "/", len(data))
+            # print("img_path",img_path)
             folder_name = img_path.split('/')[-2]
             (save_root/folder_name).mkdir(exist_ok = True, parents = True)
             img_name = img_path.split('/')[-1]
@@ -139,6 +140,6 @@ for done, img_path in enumerate(data):
             cv2.imwrite(str(save_path), overall_mask*255)
             print("saved")
 
-            exit(1)
-    # except:
-    #     print("some exception occcured")
+            # exit(1)
+    except:
+        print("some exception occcured")
