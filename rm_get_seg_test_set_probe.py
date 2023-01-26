@@ -79,6 +79,7 @@ data = dirs
 #         data.append([l[0], int(l[1]), int(l[2]), int(l[3])])
 #     except:
 #         print("some error")
+from PIL import Image
 for done, img_path in enumerate(data):
     try:
             print("done",done, "/", len(data))
@@ -87,9 +88,11 @@ for done, img_path in enumerate(data):
             (save_root/folder_name).mkdir(exist_ok = True, parents = True)
             img_name = img_path.split('/')[-1]
             # img_path = Path(v_dir)/f_id
+            im = Image.open(str(img_path))
+            w,h = im.size
+
+            # print("read im", im.shape)
             im = cv2.imread(str(img_path))
-            h,w, _ = im.shape
-            print("read im", im.shape)
             if max(h,w)> 500:
                 print("continuing")
                 continue
