@@ -2,9 +2,9 @@
 import os 
 print("fetching dirs")
 dirs = os.listdir('/data/project/bts_evaluation_dataset/gallery')
-print("before",len(dir))
+print("before",len(dirs))
 dirs += os.listdir('/data/project/bts_evaluation_dataset/probe')
-
+print("after",len(dirs))
 
 
 # print(len(dirs))
