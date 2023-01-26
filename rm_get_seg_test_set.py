@@ -13,9 +13,14 @@ from detectron2.utils.logger import setup_logger
 setup_logger()
 setup_logger(name="mask2former")
 print("fetching dirs")
-dirs = os.listdir('/data/project/bts_evaluation_dataset/gallery')
+dirs = []
+paths = os.listdir('/data/project/bts_evaluation_dataset/gallery')
+for p in paths:
+    dirs.append(str(Path('/data/project/bts_evaluation_dataset/gallery')/p))
 print("before",len(dirs))
-dirs += os.listdir('/data/project/bts_evaluation_dataset/probe')
+paths= os.listdir('/data/project/bts_evaluation_dataset/probe')
+for p in paths:
+    dirs.append(str(Path('/data/project/bts_evaluation_dataset/probe')/p))
 print("after",len(dirs))
 
 # # import some common libraries
