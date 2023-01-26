@@ -90,7 +90,7 @@ for done, img_path in enumerate(data):
             im = Image.open(str(img_path))
             w,h = im.size
 
-            print("read im", im.shape)
+            # print("read im", im.shape)
             im = cv2.imread(str(img_path))
             if max(h,w)> 500:
                 print("continuing")
