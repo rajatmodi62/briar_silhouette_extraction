@@ -87,7 +87,12 @@ for done, img_path in enumerate(data):
             img_name = img_path.split('/')[-1]
             # img_path = Path(v_dir)/f_id
             im = cv2.imread(str(img_path))
+            h,w, _ = im.shape
             print("read im", im.shape)
+            if max(h,w)> 500:
+                print("continuing")
+                continue
+            
             exit(1)
             outputs = predictor(im)
 
