@@ -76,7 +76,7 @@ data = dirs
 #         print("some error")
 for done, img_path in enumerate(data):
     # try:
-            print("img_path")
+            print("img_path",img_path)
             folder_name = img_path.split('/')[-2]
             (save_root/folder_name).mkdir(exist_ok = True, parents = True)
             img_name = img_path.split('/')[-1]
