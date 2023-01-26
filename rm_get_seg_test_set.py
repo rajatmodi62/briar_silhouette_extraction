@@ -93,7 +93,7 @@ for done, img_path in enumerate(data):
                 print("continuing")
                 continue
             
-            exit(1)
+            # exit(1)
             outputs = predictor(im)
 
             # v = Visualizer(im[:, :, ::-1], coco_metadata, scale=1.2, instance_mode=ColorMode.IMAGE_BW)
