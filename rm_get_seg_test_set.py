@@ -2,8 +2,13 @@
 import os 
 print("fetching dirs")
 dirs = os.listdir('/data/project/bts_evaluation_dataset/gallery')
-print(len(dirs))
-exit(1)
+print("before",len(dir))
+dirs += os.listdir('/data/project/bts_evaluation_dataset/probe')
+
+
+
+# print(len(dirs))
+# exit(1)
 # from pathlib import Path 
 # import torch
 
