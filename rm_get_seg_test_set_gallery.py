@@ -36,7 +36,7 @@ from detectron2.projects.deeplab import add_deeplab_config
 from pathlib import Path
 # import Mask2Former project
 from mask2former import add_maskformer2_config
-
+from PIL import Image
 import pickle 
 import random 
 import pycocotools.mask as mask_util
@@ -87,9 +87,11 @@ for done, img_path in enumerate(data):
             (save_root/folder_name).mkdir(exist_ok = True, parents = True)
             img_name = img_path.split('/')[-1]
             # img_path = Path(v_dir)/f_id
-            im = cv2.imread(str(img_path))
-            h,w, _ = im.shape
+            im = Image.open(str(img_path))
+            w,h = im.size
+
             print("read im", im.shape)
+            im = cv2.imread(str(img_path))
             if max(h,w)> 500:
                 print("continuing")
                 continue
