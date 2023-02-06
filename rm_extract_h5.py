@@ -14,7 +14,7 @@ import detectron2
 from detectron2.utils.logger import setup_logger
 setup_logger()
 setup_logger(name="mask2former")
-
+import copy
 
 # import some common libraries
 import numpy as np
@@ -82,6 +82,7 @@ for done, item in enumerate(filtered_f_ids):
 
     n_frames = data.shape[0]
     for f_id in range(n_frames):
+        id = copy.deepcopy(f_id)
         f_id = str(f_id)+'.jpg'
         save_id = h5_path.split('.')[0]
 
@@ -93,7 +94,7 @@ for done, item in enumerate(filtered_f_ids):
    
         # im = cv2.imread(str(src_path))
         # print("read im", im.shape)
-        im = data[f_id]
+        im = data[id]
         outputs = predictor(im)
 
         # v = Visualizer(im[:, :, ::-1], coco_metadata, scale=1.2, instance_mode=ColorMode.IMAGE_BW)
