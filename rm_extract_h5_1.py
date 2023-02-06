@@ -75,7 +75,7 @@ n = len(filtered_f_ids)
 
 for done, item in enumerate(filtered_f_ids[:n//2]):
     try:
-        print("done", done, "/", len(filtered_f_ids))
+        # print("done", done, "/", len(filtered_f_ids))
         print("trying")
         # print("v_folder", v_folder)
         v_folder, h5_path = item
@@ -85,6 +85,7 @@ for done, item in enumerate(filtered_f_ids[:n//2]):
 
         n_frames = data.shape[0]
         for f_id in range(n_frames):
+            print("done", done, "/", len(filtered_f_ids), f_id,"/", n_frames)
             id = copy.deepcopy(f_id)
             f_id = str(f_id)+'.jpg'
             save_id = h5_path.split('.')[0]
