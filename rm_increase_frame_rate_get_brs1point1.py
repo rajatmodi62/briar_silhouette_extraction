@@ -132,6 +132,8 @@ for done, item in enumerate(filtered_f_ids):
                 masks = rearrange(masks, 'n h w -> h w n')
                 n_preds = classes.shape[0]
                 overall_mask = None
+                print("no of preds",n_preds)
+                exit(1)
                 for i in range(n_preds):
                     c = classes[i] 
                     if c==0:
