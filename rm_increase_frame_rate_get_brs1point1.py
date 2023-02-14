@@ -5,7 +5,7 @@ import detectron2
 from detectron2.utils.logger import setup_logger
 setup_logger()
 setup_logger(name="mask2former")
-
+import h5py
 # import some common libraries
 import numpy as np
 import cv2
@@ -73,11 +73,37 @@ for p in os.walk(str(root_dir)):
 print("len of", len(filtered_f_ids),filtered_f_ids[0])
 
 
+batch_size = 32 
 for done, item in enumerate(filtered_f_ids):
     print("done", done, "/", len(filtered_f_ids))
-    exit(1)
+    v_folder, h5_path = item
+    src_path = Path(v_folder)/h5_path
+    clip_data = h5py.File(str(src_path), 'r')
+    data = clip_data['data']
+    n_frames = data.shape[0]
+
 fps_list = []
 for i in range(1,batch_size):
+    v_folder, h5_path = item
+    src_path = Path(v_folder)/h5_path
+    clip_data = h5py.File(str(src_path), 'r')
+    data = clip_data['data']
+    n_frames = data.shape[0]
+    n_batches = n_frames//batch_size 
+    if n_frames%batch_size!=0:
+        n_batches+=1
+    for i in range(n_batches):
+        print(batch_size*i, batch_size*(i+1))
+        start = batch_size*i
+        end = batch_size*(i+1)
+        x= data[batch_size*i:batch_size*(i+1)]
+        with torch.no_grad():
+            x = x[:,:,:,::-1]
+            n_el = x.shape[0]
+            for offset in range(n_el):
+                f_id = start + offset 
+                print("f_id",f_id,n_frames)
+    exit(1)  
 
     x = np.zeros((i,256,256,3))
     with torch.no_grad(): 
