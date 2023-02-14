@@ -120,7 +120,9 @@ for done, item in enumerate(filtered_f_ids):
             for img_id in range(n_images):
                 f_id = start + img_id
                 print("f_id",f_id)
-    exit(1)
+                #choose the current pred
+                pred = predictions[img_id]
+                pred = pred['instances'].to('cpu')
     x = np.zeros((i,256,256,3))
     with torch.no_grad(): 
 
