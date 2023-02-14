@@ -80,9 +80,11 @@ with torch.no_grad():
             d = {"image": x[img_id], "height": h_orig, "width": w_orig}
             input.append(d)
 
-        tic = time.time()
-        predictions = model(input)
-        toc = time.time()
+        
+        with torch.cuda.amp.autocast():
+            tic = time.time()
+            predictions = model(input)
+            toc = time.time()
         print(toc-tic,tic, toc)
         time_per_image = (toc-tic)/batch_size
         fps = 1/time_per_image
