@@ -150,6 +150,7 @@ for done, item in enumerate(filtered_f_ids):
                 v_folder = '/'.join(v_folder)
                 dest_path = Path(save_root)/v_folder
                 print("dest path",dest_path)
+                print("overall mask",overall_mask.shape, type(overall_mask))
                 dest_path.mkdir(exist_ok=True, parents =True)
                 dest_path = dest_path/(str(f_id) + '.jpg')
                 cv2.imwrite(str(dest_path), overall_mask*255)
