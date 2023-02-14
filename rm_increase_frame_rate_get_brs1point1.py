@@ -73,10 +73,10 @@ for p in os.walk(str(root_dir)):
 print("len of", len(filtered_f_ids),filtered_f_ids[0])
 
 
-batch_size = 32 
+batch_size = 64 
 score_thresh = 0.5
 for done, item in enumerate(filtered_f_ids):
-    print("done", done, "/", len(filtered_f_ids))
+    # print("done", done, "/", len(filtered_f_ids))
     v_folder, h5_path = item
     src_path = Path(v_folder)/h5_path
     # print("v_folder",v_folder)
@@ -88,7 +88,7 @@ for done, item in enumerate(filtered_f_ids):
     if n_frames%batch_size!=0:
         n_batches+=1
     for i in range(n_batches):
-        print("done", done, "/", len(filtered_f_ids),i,"/",n_batches)
+        print("done", done, "/", len(filtered_f_ids),i+1,"/",n_batches)
         # print(batch_size*i, batch_size*(i+1))
         start = batch_size*i
         end = batch_size*(i+1)
