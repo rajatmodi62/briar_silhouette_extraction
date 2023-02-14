@@ -79,7 +79,7 @@ for done, item in enumerate(filtered_f_ids):
     print("done", done, "/", len(filtered_f_ids))
     v_folder, h5_path = item
     src_path = Path(v_folder)/h5_path
-    print("v_folder",v_folder)
+    # print("v_folder",v_folder)
     # exit(1)
     clip_data = h5py.File(str(src_path), 'r')
     data = clip_data['data']
@@ -88,7 +88,8 @@ for done, item in enumerate(filtered_f_ids):
     if n_frames%batch_size!=0:
         n_batches+=1
     for i in range(n_batches):
-        print(batch_size*i, batch_size*(i+1))
+        print("done", done, "/", len(filtered_f_ids),i,"/",n_batches)
+        # print(batch_size*i, batch_size*(i+1))
         start = batch_size*i
         end = batch_size*(i+1)
         x= data[batch_size*i:batch_size*(i+1)]
@@ -103,13 +104,13 @@ for done, item in enumerate(filtered_f_ids):
             for img_id in range(n_images):
                 img = x[img_id]
                 h_orig, w_orig,_ = img.shape
-                print("image shape", img.shape)
+                # print("image shape", img.shape)
                 img = aug.get_transform(img).apply_image(img)
                 aug_images.append(img)
             x = np.stack(aug_images, 0)
             x =  torch.as_tensor(x.astype("float32")).cuda()
             x = rearrange(x, 'b h w c-> b c h w')
-            print(h_orig, w_orig)
+            # print(h_orig, w_orig)
 
             input = []
             for img_id in range(n_images):
@@ -123,7 +124,7 @@ for done, item in enumerate(filtered_f_ids):
             
             for img_id in range(n_images):
                 f_id = start + img_id
-                print("f_id",f_id)
+                # print("f_id",f_id)
                 #choose the current pred
                 pred = predictions[img_id]
                 rm_outputs = pred['instances'].to('cpu')
@@ -134,7 +135,7 @@ for done, item in enumerate(filtered_f_ids):
                 masks = rearrange(masks, 'n h w -> h w n')
                 n_preds = classes.shape[0]
                 overall_mask = None
-                print("no of preds",n_preds)
+                # print("no of preds",n_preds)
                 # exit(1)
                 for i in range(n_preds):
                     c = classes[i] 
@@ -159,7 +160,7 @@ for done, item in enumerate(filtered_f_ids):
                 # print("overall mask",overall_mask.shape, type(overall_mask))
                 dest_path.mkdir(exist_ok=True, parents =True)
                 dest_path = dest_path/(str(f_id) + '.jpg')
-                print(dest_path)
-                print('---------------------------')
+                # print(dest_path)
+                # print('---------------------------')
                 cv2.imwrite(str(dest_path), overall_mask*255)
-            exit(1)
+            # exit(1)
