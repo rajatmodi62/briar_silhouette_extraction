@@ -74,6 +74,7 @@ print("len of", len(filtered_f_ids),filtered_f_ids[0])
 
 
 batch_size = 32 
+score_thresh = 0.5
 for done, item in enumerate(filtered_f_ids):
     print("done", done, "/", len(filtered_f_ids))
     v_folder, h5_path = item
@@ -122,49 +123,28 @@ for done, item in enumerate(filtered_f_ids):
                 print("f_id",f_id)
                 #choose the current pred
                 pred = predictions[img_id]
-                pred = pred['instances'].to('cpu')
-    x = np.zeros((i,256,256,3))
-    with torch.no_grad(): 
-
-        if input_format == "RGB":
-            # whether the model expects BGR inputs or RGB
-            print(x.shape)
-            x = x[:,:,:,::-1] 
-            aug_images = []
-            n_images = x.shape[0]
-            for img_id in range(n_images):
-                img = x[img_id]
-                h_orig, w_orig,_ = img.shape
-                print("image shape", img.shape)
-                img = aug.get_transform(img).apply_image(img)
-                aug_images.append(img)
-            x = np.stack(aug_images, 0)
-            x =  torch.as_tensor(x.astype("float32")).cuda()
-            x = rearrange(x, 'b h w c-> b c h w')
-            print(h_orig, w_orig)
-
-            input = []
-            for img_id in range(n_images):
-                d = {"image": x[img_id], "height": h_orig, "width": w_orig}
-                input.append(d)
-
-            tic = time.time()
-            predictions = model(input)
-            toc = time.time()
-            
-
-            
-            with torch.cuda.amp.autocast():
-                tic = time.time()
-                predictions = model(input)
-                toc = time.time()
-            print(toc-tic,tic, toc)
-            time_per_image = (toc-tic)/i
-            fps = 1/time_per_image
-            fps_list.append(fps)
-
-            print("fps",fps)
-            #print("type of", type(predictions), len(predictions))
-
-for i, fps in enumerate(fps_list):
-    print(i+1, ":",fps)
+                rm_outputs = pred['instances'].to('cpu')
+                boxes = rm_outputs.pred_boxes
+                scores = rm_outputs.scores
+                classes = rm_outputs.pred_classes
+                masks =rm_outputs.pred_masks
+                masks = rearrange(masks, 'n h w -> h w n')
+                n_preds = classes.shape[0]
+                overall_mask = None
+                for i in range(n_preds):
+                    c = classes[i] 
+                    if c==0:
+                        mask = masks[:,:,i].numpy()
+                        mask = repeat(mask, 'h w -> h w c', c = 1)
+                        if scores[i] > score_thresh:
+                            # print(mask.shape, overall_mask.shape)
+                            if overall_mask is None:
+                                overall_mask = mask
+                            else:
+                                overall_mask+=mask#.astype(np.float)
+                overall_mask = (overall_mask > 0)*1
+                dest_path = root_dir/v_folder
+                dest_path.mkdir(exist_ok=True, parents =True)
+                dest_path = dest_path/(str(f_id) + '.jpg')
+                cv2.imwrite(str(dest_path), overall_mask*255)
+                exit(1)
