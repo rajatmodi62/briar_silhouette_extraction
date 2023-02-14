@@ -133,7 +133,7 @@ for done, item in enumerate(filtered_f_ids):
                 n_preds = classes.shape[0]
                 overall_mask = None
                 print("no of preds",n_preds)
-                exit(1)
+                # exit(1)
                 for i in range(n_preds):
                     c = classes[i] 
                     if c==0:
@@ -158,4 +158,4 @@ for done, item in enumerate(filtered_f_ids):
                 print(dest_path)
                 print('---------------------------')
                 cv2.imwrite(str(dest_path), overall_mask*255)
-        # exit(1)
+            exit(1)
