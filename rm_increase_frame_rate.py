@@ -58,7 +58,7 @@ batch_size = 70
 
 
 fps_list = []
-for i in range(batch_size):
+for i in range(1,batch_size):
 
     x = np.zeros((i,256,256,3))
     with torch.no_grad(): 
