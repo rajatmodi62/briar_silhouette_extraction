@@ -79,6 +79,8 @@ for done, item in enumerate(filtered_f_ids):
     print("done", done, "/", len(filtered_f_ids))
     v_folder, h5_path = item
     src_path = Path(v_folder)/h5_path
+    print("v_folder",v_folder)
+    exit(1)
     clip_data = h5py.File(str(src_path), 'r')
     data = clip_data['data']
     n_frames = data.shape[0]
