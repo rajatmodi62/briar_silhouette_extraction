@@ -144,6 +144,7 @@ for done, item in enumerate(filtered_f_ids):
                                 overall_mask+=mask#.astype(np.float)
                 overall_mask = (overall_mask > 0)*1
                 dest_path = save_root/v_folder
+                print("dest path",dest_path)
                 dest_path.mkdir(exist_ok=True, parents =True)
                 dest_path = dest_path/(str(f_id) + '.jpg')
                 cv2.imwrite(str(dest_path), overall_mask*255)
