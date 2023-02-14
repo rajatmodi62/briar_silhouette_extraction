@@ -54,7 +54,7 @@ aug = T.ResizeShortestEdge(
 
 input_format = cfg.INPUT.FORMAT
 
-batch_size = 10
+batch_size = 40
 x = np.zeros((batch_size,224,224,3))
 with torch.no_grad(): 
 
