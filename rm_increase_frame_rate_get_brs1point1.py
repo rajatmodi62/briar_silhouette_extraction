@@ -147,8 +147,9 @@ for done, item in enumerate(filtered_f_ids):
                                 overall_mask+=mask#.astype(np.float)
                 overall_mask = (overall_mask > 0)*1
                 # print("before", save_root)
-                # print("v_folder", v_folder)
+                print("v_folder before split", v_folder)
                 v_folder = v_folder.split('/')[2:]
+                
                 v_folder = '/'.join(v_folder)
                 dest_path = Path(save_root)/v_folder
                 print("dest path",dest_path)
