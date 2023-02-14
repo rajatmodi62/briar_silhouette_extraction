@@ -118,6 +118,7 @@ for done, item in enumerate(filtered_f_ids):
             predictions = model(input)
             toc = time.time()
 
+            
             for img_id in range(n_images):
                 f_id = start + img_id
                 print("f_id",f_id)
