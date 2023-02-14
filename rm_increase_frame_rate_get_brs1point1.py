@@ -80,7 +80,7 @@ for done, item in enumerate(filtered_f_ids):
     v_folder, h5_path = item
     src_path = Path(v_folder)/h5_path
     print("v_folder",v_folder)
-    exit(1)
+    # exit(1)
     clip_data = h5py.File(str(src_path), 'r')
     data = clip_data['data']
     n_frames = data.shape[0]
@@ -149,13 +149,13 @@ for done, item in enumerate(filtered_f_ids):
                                 overall_mask+=mask#.astype(np.float)
                 overall_mask = (overall_mask > 0)*1
                 # print("before", save_root)
-                print("v_folder before split", v_folder)
-                v_folder = str(v_folder).split('/')[2:]
+                # print("v_folder before split", v_folder)
+                new_v_folder = str(v_folder).split('/')[2:]
                 
-                v_folder = '/'.join(v_folder)
-                dest_path = Path(save_root)/v_folder
-                print("dest path",dest_path)
-                print("v_folder",v_folder)
+                new_v_folder = '/'.join(new_v_folder)
+                dest_path = Path(save_root)/new_v_folder
+                # print("dest path",dest_path)
+                # print("v_folder",new_v_folder)
                 # print("overall mask",overall_mask.shape, type(overall_mask))
                 dest_path.mkdir(exist_ok=True, parents =True)
                 dest_path = dest_path/(str(f_id) + '.jpg')
