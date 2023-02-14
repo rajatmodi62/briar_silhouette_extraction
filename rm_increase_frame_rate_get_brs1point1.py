@@ -153,5 +153,7 @@ for done, item in enumerate(filtered_f_ids):
                 # print("overall mask",overall_mask.shape, type(overall_mask))
                 dest_path.mkdir(exist_ok=True, parents =True)
                 dest_path = dest_path/(str(f_id) + '.jpg')
+                print(dest_path)
+                print('---------------------------')
                 cv2.imwrite(str(dest_path), overall_mask*255)
-                # exit(1)
+        # exit(1)
