@@ -81,14 +81,6 @@ for done, item in enumerate(filtered_f_ids):
     clip_data = h5py.File(str(src_path), 'r')
     data = clip_data['data']
     n_frames = data.shape[0]
-
-fps_list = []
-for i in range(1,batch_size):
-    v_folder, h5_path = item
-    src_path = Path(v_folder)/h5_path
-    clip_data = h5py.File(str(src_path), 'r')
-    data = clip_data['data']
-    n_frames = data.shape[0]
     n_batches = n_frames//batch_size 
     if n_frames%batch_size!=0:
         n_batches+=1
@@ -104,6 +96,13 @@ for i in range(1,batch_size):
                 f_id = start + offset 
                 print("f_id",f_id,n_frames)
     exit(1)  
+fps_list = []
+for i in range(1,batch_size):
+    v_folder, h5_path = item
+    src_path = Path(v_folder)/h5_path
+    clip_data = h5py.File(str(src_path), 'r')
+    data = clip_data['data']
+    
 
     x = np.zeros((i,256,256,3))
     with torch.no_grad(): 
