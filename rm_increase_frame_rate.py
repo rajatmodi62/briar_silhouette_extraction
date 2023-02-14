@@ -55,38 +55,48 @@ aug = T.ResizeShortestEdge(
 input_format = cfg.INPUT.FORMAT
 
 batch_size = 70
-x = np.zeros((batch_size,256,256,3))
-with torch.no_grad(): 
 
-    if input_format == "RGB":
-        # whether the model expects BGR inputs or RGB
-        print(x.shape)
-        x = x[:,:,:,::-1] 
-        aug_images = []
-        n_images = x.shape[0]
-        for img_id in range(n_images):
-            img = x[img_id]
-            h_orig, w_orig,_ = img.shape
-            print("image shape", img.shape)
-            img = aug.get_transform(img).apply_image(img)
-            aug_images.append(img)
-        x = np.stack(aug_images, 0)
-        x =  torch.as_tensor(x.astype("float32")).cuda()
-        x = rearrange(x, 'b h w c-> b c h w')
-        print(h_orig, w_orig)
 
-        input = []
-        for img_id in range(n_images):
-            d = {"image": x[img_id], "height": h_orig, "width": w_orig}
-            input.append(d)
+fps_list = []
+for i in range(batch_size):
 
-        
-        with torch.cuda.amp.autocast():
-            tic = time.time()
-            predictions = model(input)
-            toc = time.time()
-        print(toc-tic,tic, toc)
-        time_per_image = (toc-tic)/batch_size
-        fps = 1/time_per_image
-        print("fps",fps)
-        print("type of", type(predictions), len(predictions))
+    x = np.zeros((i,256,256,3))
+    with torch.no_grad(): 
+
+        if input_format == "RGB":
+            # whether the model expects BGR inputs or RGB
+            print(x.shape)
+            x = x[:,:,:,::-1] 
+            aug_images = []
+            n_images = x.shape[0]
+            for img_id in range(n_images):
+                img = x[img_id]
+                h_orig, w_orig,_ = img.shape
+                print("image shape", img.shape)
+                img = aug.get_transform(img).apply_image(img)
+                aug_images.append(img)
+            x = np.stack(aug_images, 0)
+            x =  torch.as_tensor(x.astype("float32")).cuda()
+            x = rearrange(x, 'b h w c-> b c h w')
+            print(h_orig, w_orig)
+
+            input = []
+            for img_id in range(n_images):
+                d = {"image": x[img_id], "height": h_orig, "width": w_orig}
+                input.append(d)
+
+            
+            with torch.cuda.amp.autocast():
+                tic = time.time()
+                predictions = model(input)
+                toc = time.time()
+            print(toc-tic,tic, toc)
+            time_per_image = (toc-tic)/i
+            fps = 1/time_per_image
+            fps_list.append(fps)
+
+            print("fps",fps)
+            #print("type of", type(predictions), len(predictions))
+
+for i, fps in enumerate(fps_list):
+    print(i+1, ":",fps)
