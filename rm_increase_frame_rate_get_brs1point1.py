@@ -92,18 +92,35 @@ for done, item in enumerate(filtered_f_ids):
         with torch.no_grad():
             x = x[:,:,:,::-1]
             n_el = x.shape[0]
-            for offset in range(n_el):
-                f_id = start + offset 
-                print("f_id",f_id,n_frames)
-    exit(1)  
-fps_list = []
-for i in range(1,batch_size):
-    v_folder, h5_path = item
-    src_path = Path(v_folder)/h5_path
-    clip_data = h5py.File(str(src_path), 'r')
-    data = clip_data['data']
-    
+            # for offset in range(n_el):
+            #     f_id = start + offset 
+            #     print("f_id",f_id,n_frames)
+            aug_images = []
+            n_images = x.shape[0]
+            for img_id in range(n_images):
+                img = x[img_id]
+                h_orig, w_orig,_ = img.shape
+                print("image shape", img.shape)
+                img = aug.get_transform(img).apply_image(img)
+                aug_images.append(img)
+            x = np.stack(aug_images, 0)
+            x =  torch.as_tensor(x.astype("float32")).cuda()
+            x = rearrange(x, 'b h w c-> b c h w')
+            print(h_orig, w_orig)
 
+            input = []
+            for img_id in range(n_images):
+                d = {"image": x[img_id], "height": h_orig, "width": w_orig}
+                input.append(d)
+
+            tic = time.time()
+            predictions = model(input)
+            toc = time.time()
+
+            for img_id in range(n_images):
+                f_id = start + img_id
+                print("f_id",f_id)
+    exit(1)
     x = np.zeros((i,256,256,3))
     with torch.no_grad(): 
 
@@ -128,6 +145,11 @@ for i in range(1,batch_size):
             for img_id in range(n_images):
                 d = {"image": x[img_id], "height": h_orig, "width": w_orig}
                 input.append(d)
+
+            tic = time.time()
+            predictions = model(input)
+            toc = time.time()
+            
 
             
             with torch.cuda.amp.autocast():
