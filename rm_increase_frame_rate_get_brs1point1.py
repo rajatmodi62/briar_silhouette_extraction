@@ -146,6 +146,8 @@ for done, item in enumerate(filtered_f_ids):
                 overall_mask = (overall_mask > 0)*1
                 print("before", save_root)
                 print("v_folder", v_folder)
+                v_folder = v_folder.split('/')[2:]
+                v_folder = '/'.join(v_folder)
                 dest_path = Path(save_root)/'godzilla_silhouette'/v_folder
                 print("dest path",dest_path)
                 dest_path.mkdir(exist_ok=True, parents =True)
