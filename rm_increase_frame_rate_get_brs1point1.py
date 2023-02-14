@@ -71,7 +71,11 @@ for p in os.walk(str(root_dir)):
             filtered_f_ids.append([v_folder,f_id])
             # print("true")
 print("len of", len(filtered_f_ids),filtered_f_ids[0])
-exit(1)
+
+
+for done, item in enumerate(filtered_f_ids):
+    print("done", done, "/", len(filtered_f_ids))
+    exit(1)
 fps_list = []
 for i in range(1,batch_size):
 
