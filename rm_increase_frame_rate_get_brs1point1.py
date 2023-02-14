@@ -70,7 +70,7 @@ for p in os.walk(str(root_dir)):
         if '.h5' in f_id:
             filtered_f_ids.append([v_folder,f_id])
             # print("true")
-print("len of", len(filtered_f_ids),v_folder)
+print("len of", len(filtered_f_ids),filtered_f_ids[0])
 exit(1)
 fps_list = []
 for i in range(1,batch_size):
