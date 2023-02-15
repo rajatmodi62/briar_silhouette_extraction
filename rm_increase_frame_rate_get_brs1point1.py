@@ -28,6 +28,7 @@ import pycocotools.mask as mask_util
 import numpy as np 
 from einops import rearrange, reduce, repeat
 import time
+torch.cuda.init()
 cfg = get_cfg()
 add_deeplab_config(cfg)
 add_maskformer2_config(cfg)
