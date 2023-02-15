@@ -77,90 +77,94 @@ batch_size = 64
 score_thresh = 0.5
 for done, item in enumerate(filtered_f_ids):
     # print("done", done, "/", len(filtered_f_ids))
-    v_folder, h5_path = item
-    src_path = Path(v_folder)/h5_path
-    # print("v_folder",v_folder)
-    # exit(1)
-    clip_data = h5py.File(str(src_path), 'r')
-    data = clip_data['data']
-    n_frames = data.shape[0]
-    n_batches = n_frames//batch_size 
-    if n_frames%batch_size!=0:
-        n_batches+=1
-    for i in range(n_batches):
-        print("done", done, "/", len(filtered_f_ids),i+1,"/",n_batches)
-        # print(batch_size*i, batch_size*(i+1))
-        start = batch_size*i
-        end = batch_size*(i+1)
-        x= data[batch_size*i:batch_size*(i+1)]
-        with torch.no_grad():
-            x = x[:,:,:,::-1]
-            n_el = x.shape[0]
-            # for offset in range(n_el):
-            #     f_id = start + offset 
-            #     print("f_id",f_id,n_frames)
-            aug_images = []
-            n_images = x.shape[0]
-            for img_id in range(n_images):
-                img = x[img_id]
-                h_orig, w_orig,_ = img.shape
-                # print("image shape", img.shape)
-                img = aug.get_transform(img).apply_image(img)
-                aug_images.append(img)
-            x = np.stack(aug_images, 0)
-            x =  torch.as_tensor(x.astype("float32")).cuda()
-            x = rearrange(x, 'b h w c-> b c h w')
-            # print(h_orig, w_orig)
+    
+    try:
+        v_folder, h5_path = item
+        src_path = Path(v_folder)/h5_path
+        # print("v_folder",v_folder)
+        # exit(1)
+        clip_data = h5py.File(str(src_path), 'r')
+        data = clip_data['data']
+        n_frames = data.shape[0]
+        n_batches = n_frames//batch_size 
+        if n_frames%batch_size!=0:
+            n_batches+=1
+        for i in range(n_batches):
+            print("done", done, "/", len(filtered_f_ids),i+1,"/",n_batches)
+            # print(batch_size*i, batch_size*(i+1))
+            start = batch_size*i
+            end = batch_size*(i+1)
+            x= data[batch_size*i:batch_size*(i+1)]
+            with torch.no_grad():
+                x = x[:,:,:,::-1]
+                n_el = x.shape[0]
+                # for offset in range(n_el):
+                #     f_id = start + offset 
+                #     print("f_id",f_id,n_frames)
+                aug_images = []
+                n_images = x.shape[0]
+                for img_id in range(n_images):
+                    img = x[img_id]
+                    h_orig, w_orig,_ = img.shape
+                    # print("image shape", img.shape)
+                    img = aug.get_transform(img).apply_image(img)
+                    aug_images.append(img)
+                x = np.stack(aug_images, 0)
+                x =  torch.as_tensor(x.astype("float32")).cuda()
+                x = rearrange(x, 'b h w c-> b c h w')
+                # print(h_orig, w_orig)
 
-            input = []
-            for img_id in range(n_images):
-                d = {"image": x[img_id], "height": h_orig, "width": w_orig}
-                input.append(d)
+                input = []
+                for img_id in range(n_images):
+                    d = {"image": x[img_id], "height": h_orig, "width": w_orig}
+                    input.append(d)
 
-            tic = time.time()
-            predictions = model(input)
-            toc = time.time()
+                tic = time.time()
+                predictions = model(input)
+                toc = time.time()
 
-            
-            for img_id in range(n_images):
-                f_id = start + img_id
-                # print("f_id",f_id)
-                #choose the current pred
-                pred = predictions[img_id]
-                rm_outputs = pred['instances'].to('cpu')
-                boxes = rm_outputs.pred_boxes
-                scores = rm_outputs.scores
-                classes = rm_outputs.pred_classes
-                masks =rm_outputs.pred_masks
-                masks = rearrange(masks, 'n h w -> h w n')
-                n_preds = classes.shape[0]
-                overall_mask = None
-                # print("no of preds",n_preds)
-                # exit(1)
-                for i in range(n_preds):
-                    c = classes[i] 
-                    if c==0:
-                        mask = masks[:,:,i].numpy()
-                        mask = repeat(mask, 'h w -> h w c', c = 1)
-                        if scores[i] > score_thresh:
-                            # print(mask.shape, overall_mask.shape)
-                            if overall_mask is None:
-                                overall_mask = mask
-                            else:
-                                overall_mask+=mask#.astype(np.float)
-                overall_mask = (overall_mask > 0)*1
-                # print("before", save_root)
-                # print("v_folder before split", v_folder)
-                new_v_folder = str(v_folder).split('/')[2:]
                 
-                new_v_folder = '/'.join(new_v_folder)
-                dest_path = Path(save_root)/new_v_folder
-                # print("dest path",dest_path)
-                # print("v_folder",new_v_folder)
-                # print("overall mask",overall_mask.shape, type(overall_mask))
-                dest_path.mkdir(exist_ok=True, parents =True)
-                dest_path = dest_path/(str(f_id) + '.jpg')
-                # print(dest_path)
-                # print('---------------------------')
-                cv2.imwrite(str(dest_path), overall_mask*255)
-            # exit(1)
+                for img_id in range(n_images):
+                    f_id = start + img_id
+                    # print("f_id",f_id)
+                    #choose the current pred
+                    pred = predictions[img_id]
+                    rm_outputs = pred['instances'].to('cpu')
+                    boxes = rm_outputs.pred_boxes
+                    scores = rm_outputs.scores
+                    classes = rm_outputs.pred_classes
+                    masks =rm_outputs.pred_masks
+                    masks = rearrange(masks, 'n h w -> h w n')
+                    n_preds = classes.shape[0]
+                    overall_mask = None
+                    # print("no of preds",n_preds)
+                    # exit(1)
+                    for i in range(n_preds):
+                        c = classes[i] 
+                        if c==0:
+                            mask = masks[:,:,i].numpy()
+                            mask = repeat(mask, 'h w -> h w c', c = 1)
+                            if scores[i] > score_thresh:
+                                # print(mask.shape, overall_mask.shape)
+                                if overall_mask is None:
+                                    overall_mask = mask
+                                else:
+                                    overall_mask+=mask#.astype(np.float)
+                    overall_mask = (overall_mask > 0)*1
+                    # print("before", save_root)
+                    # print("v_folder before split", v_folder)
+                    new_v_folder = str(v_folder).split('/')[2:]
+                    
+                    new_v_folder = '/'.join(new_v_folder)
+                    dest_path = Path(save_root)/new_v_folder
+                    # print("dest path",dest_path)
+                    # print("v_folder",new_v_folder)
+                    # print("overall mask",overall_mask.shape, type(overall_mask))
+                    dest_path.mkdir(exist_ok=True, parents =True)
+                    dest_path = dest_path/(str(f_id) + '.jpg')
+                    # print(dest_path)
+                    # print('---------------------------')
+                    cv2.imwrite(str(dest_path), overall_mask*255)
+                # exit(1)
+    except:
+        print("extract slh")

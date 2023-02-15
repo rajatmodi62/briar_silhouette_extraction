@@ -56,7 +56,6 @@ input_format = cfg.INPUT.FORMAT
 
 
 
-root_dir = '/home/data-rawat/crops_version_v1/static_crops/brs1.1'
 
 batch_size = 70
 
