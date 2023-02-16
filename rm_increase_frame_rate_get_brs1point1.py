@@ -30,13 +30,14 @@ from einops import rearrange, reduce, repeat
 import time
 torch.cuda.init()
 cfg = get_cfg()
+cfg.INPUT.MIN_SIZE_TEST = 256
 add_deeplab_config(cfg)
 add_maskformer2_config(cfg)
 cfg.merge_from_file("configs/coco/panoptic-segmentation/swin/maskformer2_swin_large_IN21k_384_bs16_100ep.yaml")
 cfg.MODEL.WEIGHTS = 'https://dl.fbaipublicfiles.com/maskformer/mask2former/coco/panoptic/maskformer2_swin_large_IN21k_384_bs16_100ep/model_final_f07440.pkl'
 cfg.MODEL.MASK_FORMER.TEST.SEMANTIC_ON = True
-cfg.MODEL.MASK_FORMER.TEST.INSTANCE_ON = True
-cfg.MODEL.MASK_FORMER.TEST.PANOPTIC_ON = True
+cfg.MODEL.MASK_FORMER.TEST.INSTANCE_ON = False
+cfg.MODEL.MASK_FORMER.TEST.PANOPTIC_ON = False
 
 
 from mask2former.maskformer_model import MaskFormer
@@ -130,6 +131,9 @@ for done, item in enumerate(filtered_f_ids):
                     # print("f_id",f_id)
                     #choose the current pred
                     pred = predictions[img_id]
+                    
+                    print("rm_oututs",pred.keys())
+                    exit(1)
                     rm_outputs = pred['instances'].to('cpu')
                     boxes = rm_outputs.pred_boxes
                     scores = rm_outputs.scores
