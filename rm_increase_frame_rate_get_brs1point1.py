@@ -134,7 +134,7 @@ for done, item in enumerate(filtered_f_ids):
                     
                     print("rm_oututs",pred.keys())
                     # exit(1)
-                    rm_outputs = pred['sem_seg'].to('cpu')
+                    rm_outputs = pred['sem_seg'].to('cpu').numpy()
                     
 
 
@@ -159,6 +159,7 @@ for done, item in enumerate(filtered_f_ids):
                     #             else:
                     #                 overall_mask+=mask#.astype(np.float)
                     overall_mask = (rm_outputs==0)*1
+                    print("overall mask shape",overall_mask.shape)
                     # print("before", save_root)
                     # print("v_folder before split", v_folder)
                     new_v_folder = str(v_folder).split('/')[2:]
