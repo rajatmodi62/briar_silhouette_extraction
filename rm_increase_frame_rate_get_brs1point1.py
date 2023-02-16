@@ -30,7 +30,7 @@ from einops import rearrange, reduce, repeat
 import time
 torch.cuda.init()
 cfg = get_cfg()
-cfg.INPUT.MIN_SIZE_TEST = 256
+cfg.INPUT.MIN_SIZE_TEST = 512
 add_deeplab_config(cfg)
 add_maskformer2_config(cfg)
 cfg.merge_from_file("configs/coco/panoptic-segmentation/swin/maskformer2_swin_large_IN21k_384_bs16_100ep.yaml")
@@ -88,7 +88,7 @@ score_thresh = 0.5
 for done, item in enumerate(filtered_f_ids):
     # print("done", done, "/", len(filtered_f_ids))
     
-    # try:
+    try:
         v_folder, h5_path = item
         src_path = Path(v_folder)/h5_path
         # print("v_folder",v_folder)
@@ -170,7 +170,7 @@ for done, item in enumerate(filtered_f_ids):
                     #             else:
                     #                 overall_mask+=mask#.astype(np.float)
                     overall_mask = (rm_outputs==0)*1
-                    print("overall mask shape",overall_mask.shape)
+                    # print("overall mask shape",overall_mask.shape)
                     # print("before", save_root)
                     # print("v_folder before split", v_folder)
                     new_v_folder = str(v_folder).split('/')[2:]
@@ -194,9 +194,9 @@ for done, item in enumerate(filtered_f_ids):
         dbfile = open(str(dest_path), 'ab')
       
         # source, destination
-        print("doing")
+        # print("doing")
         pickle.dump(save_data, dbfile)                     
         dbfile.close()
-        exit(1)
-    # except:
-    #     print("some error occured ")
+        # exit(1)
+    except:
+        print("some error occured ")
