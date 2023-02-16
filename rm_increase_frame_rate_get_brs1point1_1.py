@@ -137,11 +137,9 @@ for done, item in enumerate(filtered_f_ids):
                 # tic = time.time()
                 predictions = model(input)
                 # toc = time.time()
-                new_v_folder = str(v_folder).split('/')[2:]
-                    
-                new_v_folder = '/'.join(new_v_folder)
-                dest_path = Path(save_root)/new_v_folder
-                dest_path.mkdir(exist_ok=True, parents =True)
+                
+                # dest_path = Path(save_root)/new_v_folder
+                # dest_path.mkdir(exist_ok=True, parents =True)
                 save_data+=predictions
                 # for img_id in range(n_images):
                     
@@ -198,9 +196,12 @@ for done, item in enumerate(filtered_f_ids):
                 #     save_data.append(overall_mask)
                 #     # print("written")
                 # # exit(1)
+        new_v_folder = str(v_folder).split('/')[2:]
+                    
+        new_v_folder = '/'.join(new_v_folder)
         dest_path = Path(save_root)/new_v_folder/'data.pkl'
         dbfile = open(str(dest_path), 'ab')
-        
+
         # source, destination
         # print("doing")
         pickle.dump(save_data, dbfile)                     
