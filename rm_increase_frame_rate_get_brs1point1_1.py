@@ -96,7 +96,10 @@ for done, item in enumerate(filtered_f_ids):
         src_path = Path(v_folder)/h5_path
         # print("v_folder",v_folder)
         # exit(1)
+        tic = time.time()
         clip_data = h5py.File(str(src_path), 'r')
+        toc = time.time()
+        print("read time", toc-tic)
         data = clip_data['data']
         print("data shape", data.shape)
         n_frames = data.shape[0]
@@ -196,6 +199,10 @@ for done, item in enumerate(filtered_f_ids):
                 #     save_data.append(overall_mask)
                 #     # print("written")
                 # # exit(1)
+        
+        tic = time.time()
+                
+                
         new_v_folder = str(v_folder).split('/')[2:]
                     
         new_v_folder = '/'.join(new_v_folder)
@@ -206,6 +213,8 @@ for done, item in enumerate(filtered_f_ids):
         # print("doing")
         pickle.dump(save_data, dbfile)                     
         dbfile.close()
+        toc = time.time()
+        print("dump time", toc-tic)
         # exit(1)
     except:
         print("some error occured ")
