@@ -148,7 +148,7 @@ for done, item in enumerate(filtered_f_ids):
                     #choose the current pred
                     pred = predictions[img_id]
                     
-                    print("rm_oututs",pred.keys())
+                    # print("rm_oututs",pred.keys())
                     # exit(1)
                     rm_outputs = pred['sem_seg'].to('cpu').numpy().argmax(0)
                     
