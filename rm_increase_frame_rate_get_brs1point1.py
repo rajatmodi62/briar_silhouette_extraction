@@ -134,7 +134,7 @@ for done, item in enumerate(filtered_f_ids):
                     
                     print("rm_oututs",pred.keys())
                     # exit(1)
-                    rm_outputs = pred['sem_seg'].to('cpu').numpy()
+                    rm_outputs = pred['sem_seg'].to('cpu').numpy().argmax(0)
                     
 
 
