@@ -80,7 +80,7 @@ score_thresh = 0.5
 for done, item in enumerate(filtered_f_ids):
     # print("done", done, "/", len(filtered_f_ids))
     
-    try:
+    # try:
         v_folder, h5_path = item
         src_path = Path(v_folder)/h5_path
         # print("v_folder",v_folder)
@@ -133,29 +133,32 @@ for done, item in enumerate(filtered_f_ids):
                     pred = predictions[img_id]
                     
                     print("rm_oututs",pred.keys())
-                    exit(1)
-                    rm_outputs = pred['instances'].to('cpu')
-                    boxes = rm_outputs.pred_boxes
-                    scores = rm_outputs.scores
-                    classes = rm_outputs.pred_classes
-                    masks =rm_outputs.pred_masks
-                    masks = rearrange(masks, 'n h w -> h w n')
-                    n_preds = classes.shape[0]
-                    overall_mask = None
+                    # exit(1)
+                    rm_outputs = pred['sem_seg'].to('cpu')
+                    
+
+
+                    # boxes = rm_outputs.pred_boxes
+                    # scores = rm_outputs.scores
+                    # classes = rm_outputs.pred_classes
+                    # masks =rm_outputs.pred_masks
+                    # masks = rearrange(masks, 'n h w -> h w n')
+                    # n_preds = classes.shape[0]
+                    # overall_mask = None
                     # print("no of preds",n_preds)
                     # exit(1)
-                    for i in range(n_preds):
-                        c = classes[i] 
-                        if c==0:
-                            mask = masks[:,:,i].numpy()
-                            mask = repeat(mask, 'h w -> h w c', c = 1)
-                            if scores[i] > score_thresh:
-                                # print(mask.shape, overall_mask.shape)
-                                if overall_mask is None:
-                                    overall_mask = mask
-                                else:
-                                    overall_mask+=mask#.astype(np.float)
-                    overall_mask = (overall_mask > 0)*1
+                    # for i in range(n_preds):
+                    #     c = classes[i] 
+                    #     if c==0:
+                    #         mask = masks[:,:,i].numpy()
+                    #         mask = repeat(mask, 'h w -> h w c', c = 1)
+                    #         if scores[i] > score_thresh:
+                    #             # print(mask.shape, overall_mask.shape)
+                    #             if overall_mask is None:
+                    #                 overall_mask = mask
+                    #             else:
+                    #                 overall_mask+=mask#.astype(np.float)
+                    overall_mask = (rm_outputs==0)*1
                     # print("before", save_root)
                     # print("v_folder before split", v_folder)
                     new_v_folder = str(v_folder).split('/')[2:]
@@ -171,5 +174,5 @@ for done, item in enumerate(filtered_f_ids):
                     # print('---------------------------')
                     cv2.imwrite(str(dest_path), overall_mask*255)
                 # exit(1)
-    except:
-        print("extract slh")
+    # except:
+    #     print("some error occured ")
