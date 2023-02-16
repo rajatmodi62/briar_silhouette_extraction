@@ -61,17 +61,25 @@ root_dir = Path('/home/data-rawat/crops_version_v1/static_crops/brs1.1')
 save_root = Path('/home/data-rawat/godzilla_silhouette')
 
 filtered_f_ids = []
-for p in os.walk(str(root_dir)):
-    v_folder = p[0]
-    # v_folder = v_folder.split('/')[2:]
-    # v_folder = '/'.join(v_folder)
+with open('/Users/rajat/personal/briar/github_repos/briar_silhouette_extraction/to_extract.txt') as f:
+    lines = f.readlines()
 
-    f_ids = p[2]
+for line in lines:
+     p = line.split(' ')[0]
+     filtered_f_ids.append([p,'clip.h5'])
+     print(filtered_f_ids)
+     exit(1)
+# for p in os.walk(str(root_dir)):
+#     v_folder = p[0]
+#     # v_folder = v_folder.split('/')[2:]
+#     # v_folder = '/'.join(v_folder)
+
+#     f_ids = p[2]
     
-    for f_id in f_ids:
-        if '.h5' in f_id:
-            filtered_f_ids.append([v_folder,f_id])
-            # print("true")
+#     for f_id in f_ids:
+#         if '.h5' in f_id:
+#             filtered_f_ids.append([v_folder,f_id])
+#             # print("true")
 print("len of", len(filtered_f_ids),filtered_f_ids[0])
 
 
