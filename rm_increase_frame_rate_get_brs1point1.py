@@ -176,6 +176,7 @@ for done, item in enumerate(filtered_f_ids):
                     overall_mask = np.expand_dims(overall_mask,2)
                     # exit(1)
                     cv2.imwrite(str(dest_path), np.uint8(overall_mask*255))
+                    print("written")
                 # exit(1)
     # except:
     #     print("some error occured ")
