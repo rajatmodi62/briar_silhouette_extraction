@@ -99,6 +99,7 @@ for done, item in enumerate(filtered_f_ids):
         n_batches = n_frames//batch_size 
         if n_frames%batch_size!=0:
             n_batches+=1
+        save_data = []
         for i in range(n_batches):
             print("done", done, "/", len(filtered_f_ids),i+1,"/",n_batches)
             # print(batch_size*i, batch_size*(i+1))
@@ -136,7 +137,7 @@ for done, item in enumerate(filtered_f_ids):
                 
                 for img_id in range(n_images):
                     
-                    
+
                     f_id = start + img_id
                     # print("f_id",f_id)
                     #choose the current pred
@@ -186,7 +187,16 @@ for done, item in enumerate(filtered_f_ids):
                     overall_mask = np.expand_dims(overall_mask,2)
                     # exit(1)
                     # cv2.imwrite(str(dest_path), np.uint8(overall_mask*255))
-                    print("written")
+                    save_data.append(overall_mask)
+                    # print("written")
                 # exit(1)
+        dest_path = Path(save_root)/new_v_folder/'data.pkl'
+        dbfile = open(str(dest_path), 'ab')
+      
+        # source, destination
+        print("doing")
+        pickle.dump(save_data, dbfile)                     
+        dbfile.close()
+        exit(1)
     # except:
     #     print("some error occured ")
