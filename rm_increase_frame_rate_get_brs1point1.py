@@ -67,8 +67,8 @@ with open('to_extract.txt') as f:
 for line in lines:
      p = line.split(' ')[0]
      filtered_f_ids.append([p,'clip.h5'])
-     print(filtered_f_ids)
-     exit(1)
+    #  print(filtered_f_ids)
+    #  exit(1)
 # for p in os.walk(str(root_dir)):
 #     v_folder = p[0]
 #     # v_folder = v_folder.split('/')[2:]
