@@ -61,7 +61,7 @@ root_dir = Path('/home/data-rawat/crops_version_v1/static_crops/brs1.1')
 save_root = Path('/home/data-rawat/godzilla_silhouette')
 
 filtered_f_ids = []
-with open('/Users/rajat/personal/briar/github_repos/briar_silhouette_extraction/to_extract.txt') as f:
+with open('to_extract.txt') as f:
     lines = f.readlines()
 
 for line in lines:
