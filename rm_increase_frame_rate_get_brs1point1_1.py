@@ -143,76 +143,79 @@ for done, item in enumerate(filtered_f_ids):
                 print(toc-tic)
                 # dest_path = Path(save_root)/new_v_folder
                 # dest_path.mkdir(exist_ok=True, parents =True)
-                save_data+=predictions
-                # for img_id in range(n_images):
+                # save_data+=predictions
+                for img_id in range(n_images):
                     
 
-                #     f_id = start + img_id
-                #     # print("f_id",f_id)
-                #     #choose the current pred
-                #     pred = predictions[img_id]
+                    f_id = start + img_id
+                    # print("f_id",f_id)
+                    #choose the current pred
+                    pred = predictions[img_id]
                     
-                #     # print("rm_oututs",pred.keys())
-                #     # exit(1)
-                #     rm_outputs = pred['sem_seg'].to('cpu').numpy().argmax(0)
+                    # print("rm_oututs",pred.keys())
+                    # exit(1)
+                    rm_outputs = pred['sem_seg'].to('cpu').numpy().argmax(0)
                     
 
 
-                #     # boxes = rm_outputs.pred_boxes
-                #     # scores = rm_outputs.scores
-                #     # classes = rm_outputs.pred_classes
-                #     # masks =rm_outputs.pred_masks
-                #     # masks = rearrange(masks, 'n h w -> h w n')
-                #     # n_preds = classes.shape[0]
-                #     # overall_mask = None
-                #     # print("no of preds",n_preds)
-                #     # exit(1)
-                #     # for i in range(n_preds):
-                #     #     c = classes[i] 
-                #     #     if c==0:
-                #     #         mask = masks[:,:,i].numpy()
-                #     #         mask = repeat(mask, 'h w -> h w c', c = 1)
-                #     #         if scores[i] > score_thresh:
-                #     #             # print(mask.shape, overall_mask.shape)
-                #     #             if overall_mask is None:
-                #     #                 overall_mask = mask
-                #     #             else:
-                #     #                 overall_mask+=mask#.astype(np.float)
-                #     overall_mask = (rm_outputs==0)*1
-                #     # print("overall mask shape",overall_mask.shape)
-                #     # print("before", save_root)
-                #     # print("v_folder before split", v_folder)
-                #     new_v_folder = str(v_folder).split('/')[2:]
+                    # boxes = rm_outputs.pred_boxes
+                    # scores = rm_outputs.scores
+                    # classes = rm_outputs.pred_classes
+                    # masks =rm_outputs.pred_masks
+                    # masks = rearrange(masks, 'n h w -> h w n')
+                    # n_preds = classes.shape[0]
+                    # overall_mask = None
+                    # print("no of preds",n_preds)
+                    # exit(1)
+                    # for i in range(n_preds):
+                    #     c = classes[i] 
+                    #     if c==0:
+                    #         mask = masks[:,:,i].numpy()
+                    #         mask = repeat(mask, 'h w -> h w c', c = 1)
+                    #         if scores[i] > score_thresh:
+                    #             # print(mask.shape, overall_mask.shape)
+                    #             if overall_mask is None:
+                    #                 overall_mask = mask
+                    #             else:
+                    #                 overall_mask+=mask#.astype(np.float)
+                    overall_mask = (rm_outputs==0)*1
+                    # print("overall mask shape",overall_mask.shape)
+                    # print("before", save_root)
+                    # print("v_folder before split", v_folder)
+                    new_v_folder = str(v_folder).split('/')[2:]
                     
-                #     new_v_folder = '/'.join(new_v_folder)
-                #     dest_path = Path(save_root)/new_v_folder
-                #     # print("dest path",dest_path)
-                #     # print("v_folder",new_v_folder)
-                #     # print("overall mask",overall_mask.shape, type(overall_mask))
-                #     dest_path.mkdir(exist_ok=True, parents =True)
-                #     dest_path = dest_path/(str(f_id) + '.jpg')
-                #     # print(dest_path)
-                #     # print('---------------------------')
-                #     overall_mask = np.expand_dims(overall_mask,2)
+                    new_v_folder = '/'.join(new_v_folder)
+                    dest_path = Path(save_root)/new_v_folder
+                    # print("dest path",dest_path)
+                    # print("v_folder",new_v_folder)
+                    # print("overall mask",overall_mask.shape, type(overall_mask))
+                    dest_path.mkdir(exist_ok=True, parents =True)
+                    dest_path = dest_path/(str(f_id) + '.jpg')
+                    # print(dest_path)
+                    # print('---------------------------')
+                    overall_mask = np.expand_dims(overall_mask,2)
                 #     # exit(1)
                 #     # cv2.imwrite(str(dest_path), np.uint8(overall_mask*255))
-                #     save_data.append(overall_mask)
+                    save_data.append(overall_mask)
                 #     # print("written")
                 # # exit(1)
         
         tic = time.time()
-                
+
+        save_data = np.stack(save_data)
                 
         new_v_folder = str(v_folder).split('/')[2:]
                     
         new_v_folder = '/'.join(new_v_folder)
-        dest_path = Path(save_root)/new_v_folder/'data.pkl'
-        dbfile = open(str(dest_path), 'ab')
+        dest_path = Path(save_root)/new_v_folder/'mask.hd5'
+        with h5py.File(str(dest_path), 'w') as f:
+            dset = f.create_dataset("default", data = save_data)
+        # dbfile = open(str(dest_path), 'ab')
 
-        # source, destination
-        # print("doing")
-        pickle.dump(save_data, dbfile)                     
-        dbfile.close()
+        # # source, destination
+        # # print("doing")
+        # pickle.dump(save_data, dbfile)                     
+        # dbfile.close()
         toc = time.time()
         print("dump time", toc-tic)
         # exit(1)
