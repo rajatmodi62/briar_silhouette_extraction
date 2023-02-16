@@ -133,11 +133,11 @@ for done, item in enumerate(filtered_f_ids):
                 for img_id in range(n_images):
                     d = {"image": x[img_id], "height": h_orig, "width": w_orig}
                     input.append(d)
-
-                # tic = time.time()
+                print("in:",x.shape)
+                tic = time.time()
                 predictions = model(input)
-                # toc = time.time()
-                
+                toc = time.time()
+                print(toc-tic)
                 # dest_path = Path(save_root)/new_v_folder
                 # dest_path.mkdir(exist_ok=True, parents =True)
                 save_data+=predictions
