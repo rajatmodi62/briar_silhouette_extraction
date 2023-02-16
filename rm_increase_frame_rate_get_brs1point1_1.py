@@ -184,15 +184,15 @@ for done, item in enumerate(filtered_f_ids):
                     # print("overall mask shape",overall_mask.shape)
                     # print("before", save_root)
                     # print("v_folder before split", v_folder)
-                    new_v_folder = str(v_folder).split('/')[2:]
+                    # new_v_folder = str(v_folder).split('/')[2:]
                     
-                    new_v_folder = '/'.join(new_v_folder)
-                    dest_path = Path(save_root)/new_v_folder
-                    # print("dest path",dest_path)
-                    # print("v_folder",new_v_folder)
-                    # print("overall mask",overall_mask.shape, type(overall_mask))
-                    dest_path.mkdir(exist_ok=True, parents =True)
-                    dest_path = dest_path/(str(f_id) + '.jpg')
+                    # new_v_folder = '/'.join(new_v_folder)
+                    # dest_path = Path(save_root)/new_v_folder
+                    # # print("dest path",dest_path)
+                    # # print("v_folder",new_v_folder)
+                    # # print("overall mask",overall_mask.shape, type(overall_mask))
+                    # dest_path.mkdir(exist_ok=True, parents =True)
+                    # dest_path = dest_path/(str(f_id) + '.jpg')
                     # print(dest_path)
                     # print('---------------------------')
                     overall_mask = np.expand_dims(overall_mask,2)
