@@ -85,6 +85,9 @@ print("len of", len(filtered_f_ids),filtered_f_ids[0])
 
 batch_size = 64 
 score_thresh = 0.5
+filtered_f_ids = sorted(filtered_f_ids)
+l = len(filtered_f_ids)
+filtered_f_ids = filtered_f_ids[l//2:]
 for done, item in enumerate(filtered_f_ids):
     # print("done", done, "/", len(filtered_f_ids))
     
@@ -96,7 +99,7 @@ for done, item in enumerate(filtered_f_ids):
         clip_data = h5py.File(str(src_path), 'r')
         data = clip_data['data']
         print("data shape", data.shape)
-        exit(1)
+        # exit(1)
         n_frames = data.shape[0]
         n_batches = n_frames//batch_size 
         if n_frames%batch_size!=0:
