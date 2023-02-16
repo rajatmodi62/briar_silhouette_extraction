@@ -144,6 +144,8 @@ for done, item in enumerate(filtered_f_ids):
                 # dest_path = Path(save_root)/new_v_folder
                 # dest_path.mkdir(exist_ok=True, parents =True)
                 # save_data+=predictions
+
+                tic = time.time()
                 for img_id in range(n_images):
                     
 
@@ -199,7 +201,8 @@ for done, item in enumerate(filtered_f_ids):
                     save_data.append(overall_mask)
                 #     # print("written")
                 # # exit(1)
-        
+                toc = time.time()
+                print("general processing", toc-tic)
         tic = time.time()
 
         save_data = np.stack(save_data)
