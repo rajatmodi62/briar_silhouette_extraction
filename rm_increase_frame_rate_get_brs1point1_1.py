@@ -218,7 +218,9 @@ for done, item in enumerate(filtered_f_ids):
         new_v_folder = str(v_folder).split('/')[2:]
                     
         new_v_folder = '/'.join(new_v_folder)
-        dest_path = Path(save_root)/new_v_folder/'masks.torch'
+        dest_path = Path(save_root)/new_v_folder
+        dest_path.mkdir(exist_ok = True, parents = True)
+        dest_path = dest_path/'mask.torch'
         # out_file = open(str(dest_path), "w")
         # d= {}
         # d[0] = save_data
