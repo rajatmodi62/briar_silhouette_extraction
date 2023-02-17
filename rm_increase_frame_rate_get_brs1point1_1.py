@@ -213,20 +213,21 @@ for done, item in enumerate(filtered_f_ids):
                 print("general processing", toc-tic)
         tic = time.time()
 
-        # save_data = np.stack(save_data)
+        save_data = torch.stack(save_data)
                 
         new_v_folder = str(v_folder).split('/')[2:]
                     
         new_v_folder = '/'.join(new_v_folder)
-        dest_path = Path(save_root)/new_v_folder/'masks.h5'
+        dest_path = Path(save_root)/new_v_folder/'masks.torch'
         # out_file = open(str(dest_path), "w")
         # d= {}
         # d[0] = save_data
         # json.dump(d, out_file)
         
         # out_file.close()
-        with h5py.File(str(dest_path), 'w') as f:
-            dset = f.create_dataset("default", data = save_data)
+        torch.save(save_data, str(dest_path))
+        # with h5py.File(str(dest_path), 'w') as f:
+        #     dset = f.create_dataset("default", data = save_data)
         # dbfile = open(str(dest_path), 'ab')
 
         # # source, destination
