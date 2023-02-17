@@ -146,13 +146,13 @@ for done, item in enumerate(filtered_f_ids):
                 # save_data+=predictions
                 # save_data.append(predictions)
                 tic = time.time()
-                # for img_id in range(n_images):
+                for img_id in range(n_images):
                     
 
                 #     f_id = start + img_id
                 #     # print("f_id",f_id)
                 #     #choose the current pred
-                #     pred = predictions[img_id]
+                    pred = predictions[img_id]
                     
                 #     # print("rm_oututs",pred.keys())
                 #     # exit(1)
@@ -200,6 +200,8 @@ for done, item in enumerate(filtered_f_ids):
                 # #     # cv2.imwrite(str(dest_path), np.uint8(overall_mask*255))
                 #     # save_data.append(overall_mask)
                 #     save_data.append(pred['sem_seg'].to('cpu').numpy().argmax(0))
+                mask = pred['sem_seg'].to('cpu').numpy().argmax(0)
+                print("mask shape", np.unique(mask))
                 #     # print("written")
                 # # exit(1)
                 toc = time.time()
