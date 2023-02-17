@@ -144,7 +144,7 @@ for done, item in enumerate(filtered_f_ids):
                 # dest_path = Path(save_root)/new_v_folder
                 # dest_path.mkdir(exist_ok=True, parents =True)
                 # save_data+=predictions
-
+                # save_data.append(predictions)
                 tic = time.time()
                 for img_id in range(n_images):
                     
@@ -156,7 +156,7 @@ for done, item in enumerate(filtered_f_ids):
                     
                     # print("rm_oututs",pred.keys())
                     # exit(1)
-                    rm_outputs = pred['sem_seg'].to('cpu').numpy().argmax(0)
+                    # rm_outputs = pred['sem_seg'].to('cpu').numpy().argmax(0)
                     
 
 
@@ -180,7 +180,7 @@ for done, item in enumerate(filtered_f_ids):
                     #                 overall_mask = mask
                     #             else:
                     #                 overall_mask+=mask#.astype(np.float)
-                    overall_mask = (rm_outputs==0)*1
+                    # overall_mask = (rm_outputs==0)*1
                     # print("overall mask shape",overall_mask.shape)
                     # print("before", save_root)
                     # print("v_folder before split", v_folder)
@@ -195,10 +195,11 @@ for done, item in enumerate(filtered_f_ids):
                     # dest_path = dest_path/(str(f_id) + '.jpg')
                     # print(dest_path)
                     # print('---------------------------')
-                    overall_mask = np.expand_dims(overall_mask,2)
+                    # overall_mask = np.expand_dims(overall_mask,2)
                 #     # exit(1)
                 #     # cv2.imwrite(str(dest_path), np.uint8(overall_mask*255))
-                    save_data.append(overall_mask)
+                    # save_data.append(overall_mask)
+                    save_data.append(pred['sem_seg'].to('cpu').numpy())
                 #     # print("written")
                 # # exit(1)
                 toc = time.time()
