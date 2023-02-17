@@ -91,7 +91,7 @@ filtered_f_ids = filtered_f_ids[:l//2]
 for done, item in enumerate(filtered_f_ids):
     # print("done", done, "/", len(filtered_f_ids))
     
-    # try:
+    try:
         v_folder, h5_path = item
         src_path = Path(v_folder)/h5_path
         # print("v_folder",v_folder)
@@ -239,5 +239,5 @@ for done, item in enumerate(filtered_f_ids):
         toc = time.time()
         print("dump time", toc-tic)
         # exit(1)
-    # except:
-    #     print("some error occured ")
+    except:
+        print("some error occured ")
