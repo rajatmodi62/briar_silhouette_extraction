@@ -199,11 +199,11 @@ for done, item in enumerate(filtered_f_ids):
                 # #     # exit(1)
                 # #     # cv2.imwrite(str(dest_path), np.uint8(overall_mask*255))
                 #     # save_data.append(overall_mask)
-                #     save_data.append(pred['sem_seg'].to('cpu').numpy().argmax(0))
-                    mask = pred['sem_seg'].to('cpu').numpy().argmax(0)
-                    mask = (mask==0)*1
-                    rle = mask_util.encode(np.array(mask, order="F", dtype="uint8"))
-                    save_data.append(rle)
+                    save_data.append(pred['sem_seg'])#.to('cpu').numpy())
+                    # mask = pred['sem_seg'].to('cpu').numpy().argmax(0)
+                    # mask = (mask==0)*1
+                    # rle = mask_util.encode(np.array(mask, order="F", dtype="uint8"))
+                    # save_data.append(rle)
                     # print("rle",rle)
                 # print("mask shape", np.unique(mask))
                 # exit(1)
@@ -218,15 +218,15 @@ for done, item in enumerate(filtered_f_ids):
         new_v_folder = str(v_folder).split('/')[2:]
                     
         new_v_folder = '/'.join(new_v_folder)
-        dest_path = Path(save_root)/new_v_folder/'masks.json'
-        out_file = open(str(dest_path), "w")
-        d= {}
-        d[0] = save_data
-        json.dump(d, out_file)
+        dest_path = Path(save_root)/new_v_folder/'masks.h5'
+        # out_file = open(str(dest_path), "w")
+        # d= {}
+        # d[0] = save_data
+        # json.dump(d, out_file)
         
-        out_file.close()
-        # with h5py.File(str(dest_path), 'w') as f:
-        #     dset = f.create_dataset("default", data = save_data)
+        # out_file.close()
+        with h5py.File(str(dest_path), 'w') as f:
+            dset = f.create_dataset("default", data = save_data)
         # dbfile = open(str(dest_path), 'ab')
 
         # # source, destination
