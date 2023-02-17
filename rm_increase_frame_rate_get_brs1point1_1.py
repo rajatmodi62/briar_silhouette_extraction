@@ -10,6 +10,7 @@ import h5py
 import numpy as np
 import cv2
 import torch
+import json 
 # import some common detectron2 utilities
 from detectron2 import model_zoo
 from detectron2.engine import DefaultPredictor
@@ -202,9 +203,10 @@ for done, item in enumerate(filtered_f_ids):
                     mask = pred['sem_seg'].to('cpu').numpy().argmax(0)
                     mask = (mask==0)*1
                     rle = mask_util.encode(np.array(mask, order="F", dtype="uint8"))
-                    print("rle",rle)
-                print("mask shape", np.unique(mask))
-                exit(1)
+                    save_data.append(rle)
+                    # print("rle",rle)
+                # print("mask shape", np.unique(mask))
+                # exit(1)
                 #     # print("written")
                 # # exit(1)
                 toc = time.time()
@@ -213,10 +215,16 @@ for done, item in enumerate(filtered_f_ids):
 
         # save_data = np.stack(save_data)
                 
-        # new_v_folder = str(v_folder).split('/')[2:]
+        new_v_folder = str(v_folder).split('/')[2:]
                     
-        # new_v_folder = '/'.join(new_v_folder)
-        # dest_path = Path(save_root)/new_v_folder/'mask.hd5'
+        new_v_folder = '/'.join(new_v_folder)
+        dest_path = Path(save_root)/new_v_folder/'masks.json'
+        out_file = open(str(dest_path), "w")
+        d= {}
+        d[0] = save_data
+        json.dump(d, out_file)
+        
+        out_file.close()
         # with h5py.File(str(dest_path), 'w') as f:
         #     dset = f.create_dataset("default", data = save_data)
         # dbfile = open(str(dest_path), 'ab')
