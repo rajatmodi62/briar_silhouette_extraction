@@ -202,8 +202,9 @@ for done, item in enumerate(filtered_f_ids):
                     mask = pred['sem_seg'].to('cpu').numpy().argmax(0)
                     mask = (mask==0)*1
                     rle = mask_util.encode(np.array(mask, order="F", dtype="uint8"))
-                    print(rle)
+                    print("rle",rle)
                 print("mask shape", np.unique(mask))
+                exit(1)
                 #     # print("written")
                 # # exit(1)
                 toc = time.time()
