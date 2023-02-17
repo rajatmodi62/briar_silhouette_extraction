@@ -199,7 +199,7 @@ for done, item in enumerate(filtered_f_ids):
                 #     # exit(1)
                 #     # cv2.imwrite(str(dest_path), np.uint8(overall_mask*255))
                     # save_data.append(overall_mask)
-                    save_data.append(pred['sem_seg'].to('cpu').numpy())
+                    save_data.append(pred['sem_seg'].to('cpu').numpy().argmax(0))
                 #     # print("written")
                 # # exit(1)
                 toc = time.time()
