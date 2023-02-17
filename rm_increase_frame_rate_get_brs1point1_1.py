@@ -21,11 +21,10 @@ coco_metadata = MetadataCatalog.get("coco_2017_val_panoptic")
 from pathlib import Path
 # import Mask2Former project
 from mask2former import add_maskformer2_config
-
-import pickle 
-import random 
 import pycocotools.mask as mask_util
 import numpy as np 
+import pickle 
+import random 
 from einops import rearrange, reduce, repeat
 import time
 torch.cuda.init()
@@ -200,7 +199,10 @@ for done, item in enumerate(filtered_f_ids):
                 # #     # cv2.imwrite(str(dest_path), np.uint8(overall_mask*255))
                 #     # save_data.append(overall_mask)
                 #     save_data.append(pred['sem_seg'].to('cpu').numpy().argmax(0))
-                mask = pred['sem_seg'].to('cpu').numpy().argmax(0)
+                    mask = pred['sem_seg'].to('cpu').numpy().argmax(0)
+                    mask = (mask==0)*1
+                    rle = mask_util.encode(np.array(mask, order="F", dtype="uint8"))
+                    print(rle)
                 print("mask shape", np.unique(mask))
                 #     # print("written")
                 # # exit(1)
