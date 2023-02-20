@@ -13,9 +13,10 @@ import cv2
 import torch 
 mask = torch.load('./mask.torch',map_location=torch.device('cpu'))
 
-f_id = 25 
-x = mask[f_id].numpy()
-x = np.expand_dims(x,2)
-x = (x==0)*1
-print(np.unique(x))
-cv2.imwrite('./qw.jpg', np.uint8(255*x))
+for f_id in range(40):
+    # f_id = 25 
+    x = mask[f_id].numpy()
+    x = np.expand_dims(x,2)
+    x = (x==0)*1
+    # print(np.unique(x),str(f_id)+'.jpg')
+    cv2.imwrite(str(f_id)+'.jpg', np.uint8(255*x))
