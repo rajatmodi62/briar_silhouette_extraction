@@ -200,7 +200,7 @@ for done, item in enumerate(filtered_f_ids):
                 # #     # cv2.imwrite(str(dest_path), np.uint8(overall_mask*255))
                 #     # save_data.append(overall_mask)
                     pred = (pred['sem_seg'].argmax(0) == 0)*1
-                    pred = pred.to_sparse_csr()
+                    # pred = pred.to_sparse_csr()
                     save_data.append(pred)
                     # save_data.append(pred['sem_seg'].argmax(0))#.to('cpu').numpy())
                     # mask = pred['sem_seg'].to('cpu').numpy().argmax(0)
@@ -217,7 +217,7 @@ for done, item in enumerate(filtered_f_ids):
         tic = time.time()
 
         save_data = torch.stack(save_data)
-                
+        save_data = save_data.to_sparse_csr()
         new_v_folder = str(v_folder).split('/')[2:]
                     
         new_v_folder = '/'.join(new_v_folder)
