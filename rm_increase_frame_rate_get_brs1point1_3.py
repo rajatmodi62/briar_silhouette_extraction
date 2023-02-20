@@ -200,14 +200,14 @@ for done, item in enumerate(filtered_f_ids):
                 # #     # cv2.imwrite(str(dest_path), np.uint8(overall_mask*255))
                 #     # save_data.append(overall_mask)
                     pred = (pred['sem_seg'].cpu().numpy().argmax(0) == 0)*1
-                    save_data.append(pred)
-                    print("pred shape", pred.shape)
-                    exit(1)
+                    # save_data.append(pred)
+                    # print("pred shape", pred.shape)
+                    # exit(1)
                     # save_data.append(pred['sem_seg'].argmax(0))#.to('cpu').numpy())
                     # mask = pred['sem_seg'].to('cpu').numpy().argmax(0)
                     # mask = (mask==0)*1
-                    # rle = mask_util.encode(np.array(mask, order="F", dtype="uint8"))
-                    # save_data.append(rle)
+                    rle = mask_util.encode(np.array(pred, order="F", dtype="uint8"))
+                    save_data.append(rle)
                     # print("rle",rle)
                 # print("mask shape", np.unique(mask))
                 # exit(1)
@@ -217,21 +217,23 @@ for done, item in enumerate(filtered_f_ids):
                 print("general processing", toc-tic)
         tic = time.time()
 
-        save_data = torch.stack(save_data)
+        # save_data = torch.stack(save_data)
                 
         new_v_folder = str(v_folder).split('/')[2:]
                     
         new_v_folder = '/'.join(new_v_folder)
         dest_path = Path(save_root)/new_v_folder
         dest_path.mkdir(exist_ok = True, parents = True)
-        dest_path = dest_path/'mask.torch'
-        # out_file = open(str(dest_path), "w")
-        # d= {}
-        # d[0] = save_data
-        # json.dump(d, out_file)
+        dest_path = dest_path/'mask.json'
+
+        # dest_path = dest_path/'mask.torch'
+        out_file = open(str(dest_path), "w")
+        d= {}
+        d[0] = save_data
+        json.dump(d, out_file)
         
         # out_file.close()
-        torch.save(save_data, str(dest_path))
+        # torch.save(save_data, str(dest_path))
         # with h5py.File(str(dest_path), 'w') as f:
         #     dset = f.create_dataset("default", data = save_data)
         # dbfile = open(str(dest_path), 'ab')
