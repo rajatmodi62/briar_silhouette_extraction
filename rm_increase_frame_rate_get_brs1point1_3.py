@@ -199,8 +199,10 @@ for done, item in enumerate(filtered_f_ids):
                 # #     # exit(1)
                 # #     # cv2.imwrite(str(dest_path), np.uint8(overall_mask*255))
                 #     # save_data.append(overall_mask)
-                    pred = (pred['sem_seg'].argmax(0) == 0)*1
+                    pred = (pred['sem_seg'].cpu().numpy().argmax(0) == 0)*1
                     save_data.append(pred)
+                    print("pred shape", pred.shape)
+                    exit(1)
                     # save_data.append(pred['sem_seg'].argmax(0))#.to('cpu').numpy())
                     # mask = pred['sem_seg'].to('cpu').numpy().argmax(0)
                     # mask = (mask==0)*1
