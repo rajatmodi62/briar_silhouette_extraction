@@ -217,7 +217,7 @@ for done, item in enumerate(filtered_f_ids):
         tic = time.time()
 
         save_data = torch.stack(save_data)
-        save_data = save_data.to_sparse_csr()
+        save_data = save_data.to_sparse()
         new_v_folder = str(v_folder).split('/')[2:]
                     
         new_v_folder = '/'.join(new_v_folder)
