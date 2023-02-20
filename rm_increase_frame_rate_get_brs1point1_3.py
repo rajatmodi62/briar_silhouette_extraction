@@ -83,7 +83,7 @@ for p in os.walk(str(root_dir)):
 print("len of", len(filtered_f_ids),filtered_f_ids[0])
 
 
-batch_size = 64 
+batch_size = 16 
 score_thresh = 0.5
 filtered_f_ids = sorted(filtered_f_ids)
 l = len(filtered_f_ids)
