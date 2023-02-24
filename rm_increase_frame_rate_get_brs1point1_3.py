@@ -89,10 +89,19 @@ filtered_f_ids = sorted(filtered_f_ids)
 l = len(filtered_f_ids)
 filtered_f_ids = filtered_f_ids[:l//2]
 for done, item in enumerate(filtered_f_ids):
-    # print("done", done, "/", len(filtered_f_ids))
+    print("done", done, "/", len(filtered_f_ids))
     
     try:
         v_folder, h5_path = item
+        new_v_folder = str(v_folder).split('/')[2:]
+                    
+        new_v_folder = '/'.join(new_v_folder)
+        dest_path = Path(save_root)/new_v_folder
+        # dest_path.mkdir(exist_ok = True, parents = True)
+        if os.path.isdir(str(dest_path)):
+            print("skipping")
+        else:
+            print("doing")
         src_path = Path(v_folder)/h5_path
         # print("v_folder",v_folder)
         # exit(1)
