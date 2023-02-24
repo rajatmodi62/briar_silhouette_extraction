@@ -233,6 +233,7 @@ for done, item in enumerate(filtered_f_ids):
         # json.dump(d, out_file)
         
         # out_file.close()
+        print("dest path", dest_path)
         torch.save(save_data, str(dest_path))
         # with h5py.File(str(dest_path), 'w') as f:
         #     dset = f.create_dataset("default", data = save_data)
