@@ -57,7 +57,7 @@ aug = T.ResizeShortestEdge(
 input_format = cfg.INPUT.FORMAT
 
 batch_size = 70
-root_dir = Path('/home/data-rawat/crops_version_v1/static_crops/bts123/')
+root_dir = Path('/home/data-rawat/crops_version_v1/static_crops/bts123_gallery/full')
 save_root = Path('/home/data-rawat/godzilla_silhouette')
 
 filtered_f_ids = []
