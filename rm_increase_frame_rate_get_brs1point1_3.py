@@ -100,7 +100,7 @@ for done, item in enumerate(filtered_f_ids):
         dest_path = dest_path/'mask.torch'
         # dest_path.mkdir(exist_ok = True, parents = True)
         if os.path.isfile(str(dest_path)):
-            print("skipping")
+            print("skipping", str(dest_path))
             continue
         else:
             print("doing")
