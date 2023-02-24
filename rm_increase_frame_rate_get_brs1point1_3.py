@@ -97,8 +97,9 @@ for done, item in enumerate(filtered_f_ids):
                     
         new_v_folder = '/'.join(new_v_folder)
         dest_path = Path(save_root)/new_v_folder
+        dest_path = dest_path/'mask.torch'
         # dest_path.mkdir(exist_ok = True, parents = True)
-        if os.path.isdir(str(dest_path)):
+        if os.path.isfile(str(dest_path)):
             print("skipping")
             continue
         else:
