@@ -100,6 +100,7 @@ for done, item in enumerate(filtered_f_ids):
         # dest_path.mkdir(exist_ok = True, parents = True)
         if os.path.isdir(str(dest_path)):
             print("skipping")
+            continue
         else:
             print("doing")
         src_path = Path(v_folder)/h5_path
