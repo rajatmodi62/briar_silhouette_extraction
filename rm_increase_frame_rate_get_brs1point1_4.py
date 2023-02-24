@@ -56,8 +56,8 @@ aug = T.ResizeShortestEdge(
 
 input_format = cfg.INPUT.FORMAT
 
-batch_size = 64
-root_dir = Path('/home/data-rawat/crops_version_v1/static_crops/bts123_gallery')
+batch_size = 70
+root_dir = Path('/home/data-rawat/crops_version_v1/static_crops/bts123')
 save_root = Path('/home/data-rawat/godzilla_silhouette')
 
 filtered_f_ids = []
@@ -87,12 +87,23 @@ batch_size = 64
 score_thresh = 0.5
 filtered_f_ids = sorted(filtered_f_ids)
 l = len(filtered_f_ids)
-filtered_f_ids = filtered_f_ids[:l//2]
+# filtered_f_ids = filtered_f_ids[:l//2]
 for done, item in enumerate(filtered_f_ids):
-    # print("done", done, "/", len(filtered_f_ids))
+    print("done", done, "/", len(filtered_f_ids))
     
     try:
         v_folder, h5_path = item
+        new_v_folder = str(v_folder).split('/')[2:]
+                    
+        new_v_folder = '/'.join(new_v_folder)
+        dest_path = Path(save_root)/new_v_folder
+        dest_path = dest_path/'mask.torch'
+        # dest_path.mkdir(exist_ok = True, parents = True)
+        if os.path.isfile(str(dest_path)):
+            print("skipping", str(dest_path))
+            continue
+        else:
+            print("doing")
         src_path = Path(v_folder)/h5_path
         # print("v_folder",v_folder)
         # exit(1)
@@ -233,6 +244,7 @@ for done, item in enumerate(filtered_f_ids):
         # json.dump(d, out_file)
         
         # out_file.close()
+        print("dest path", dest_path)
         torch.save(save_data, str(dest_path))
         # with h5py.File(str(dest_path), 'w') as f:
         #     dset = f.create_dataset("default", data = save_data)
