@@ -57,9 +57,9 @@ aug = T.ResizeShortestEdge(
 input_format = cfg.INPUT.FORMAT
 
 batch_size = 70
-root_dir = Path('/home/data-rawat/crops_version_v1/static_crops/bts123')
+root_dir = Path('/home/data-rawat/crops_version_v1/static_crops/bts123_gallery/')
 save_root = Path('/home/data-rawat/godzilla_silhouette')
-
+ 
 filtered_f_ids = []
 # with open('to_extract.txt') as f:
 #     lines = f.readlines()
@@ -87,7 +87,7 @@ batch_size = 64
 score_thresh = 0.5
 filtered_f_ids = sorted(filtered_f_ids)
 l = len(filtered_f_ids)
-# filtered_f_ids = filtered_f_ids[:l//2]
+filtered_f_ids = filtered_f_ids[l//2:]
 for done, item in enumerate(filtered_f_ids):
     print("done", done, "/", len(filtered_f_ids))
     

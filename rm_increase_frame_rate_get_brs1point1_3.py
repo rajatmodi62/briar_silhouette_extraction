@@ -87,7 +87,7 @@ batch_size = 64
 score_thresh = 0.5
 filtered_f_ids = sorted(filtered_f_ids)
 l = len(filtered_f_ids)
-# filtered_f_ids = filtered_f_ids[:l//2]
+filtered_f_ids = filtered_f_ids[:l//2]
 for done, item in enumerate(filtered_f_ids):
     print("done", done, "/", len(filtered_f_ids))
     
