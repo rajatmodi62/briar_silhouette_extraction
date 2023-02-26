@@ -87,7 +87,25 @@ batch_size = 64
 score_thresh = 0.5
 filtered_f_ids = sorted(filtered_f_ids)
 l = len(filtered_f_ids)
+
+new_f_ids = []
+for item in filtered_f_ids:
+    v_folder, h5_path = item
+    new_v_folder = str(v_folder).split('/')[2:]
+                
+    new_v_folder = '/'.join(new_v_folder)
+    dest_path = Path(save_root)/new_v_folder
+    dest_path = dest_path/'mask.torch'
+    # dest_path.mkdir(exist_ok = True, parents = True)
+    if os.path.isfile(str(dest_path)):
+        print("skipping", str(dest_path))
+        continue
+    else:
+        print("doing")
+        new_f_ids.append(item)
+filtered_f_ids = new_f_ids
 filtered_f_ids = filtered_f_ids[:l//2]
+
 for done, item in enumerate(filtered_f_ids):
     print("done", done, "/", len(filtered_f_ids))
     
