@@ -104,7 +104,7 @@ for item in filtered_f_ids:
         print("doing")
         new_f_ids.append(item)
 filtered_f_ids = new_f_ids
-filtered_f_ids = filtered_f_ids[l//2:]
+# filtered_f_ids = filtered_f_ids[l//2:]
 
 for done, item in enumerate(filtered_f_ids):
     print("done", done, "/", len(filtered_f_ids))
